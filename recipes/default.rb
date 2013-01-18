@@ -24,11 +24,3 @@ require_recipe "mysql"
 require_recipe "mysql_secure_installation"
 
 package "aegir"
-
-# Users
-user "jon" do
-  comment "Jon Pugh"
-  home "/home/jon"
-  shell "/bin/bash"
-  system true
-end
