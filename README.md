@@ -1,4 +1,6 @@
-devudo-cookbooks
-================
+devudo cookbook
+===============
 
-Chef Cookbooks for devudo.com
+Chef recipes for DEVUDO.
+
+Slow and steady.  
