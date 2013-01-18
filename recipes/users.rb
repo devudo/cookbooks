@@ -8,3 +8,8 @@ user "jon" do
   system true
 end
 
+  group "sudo" do
+    action :modify
+    members "jon"
+    append true
+  end 
