@@ -51,12 +51,9 @@ link "/etc/apache2/conf.d/aegir.conf" do
   to "/var/aegir/apache.conf"
 end
 
-# Enable mod_rewrite
-execute "Enable mod_rewrite" do
-  command "a2enmod rewrite"
-end
-
-# Drush dl provision
+# Get provision.
 execute "Download provision" do
+  # If drush runs as root, provision is not installed yet.
+  only_if "drush"
   command "drush dl provision -y"
 end
