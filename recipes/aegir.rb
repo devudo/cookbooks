@@ -2,7 +2,7 @@
 # From http://community.aegirproject.org/installing/manual
 
 #
-require_recipe "lamp"
+require_recipe "devudo::lamp"
 
 
   # Create the Aegir user
@@ -20,22 +20,45 @@ require_recipe "lamp"
   directory "/var/aegir" do
     owner "aegir"
     group "aegir"
-    mode "0755"
+    mode 00755
     action :create
     recursive true
   end
 
   # Make sure the Aegir user is allowed to restart apache
-  sudo "apache2" do
-    user "aegir"
-    commands ["/usr/sbin/apache2ctl"]
-    host "ALL"
-    nopasswd true
+  # RESOURCE sudo DOES NOT EXIST
+  
+  #sudo "apache2" do
+  #  user "aegir"
+  #  commands ["/usr/sbin/apache2ctl"]
+  #  host "ALL"
+  #  nopasswd true
+  #end
+
+  package 'sudo' do
+    action :install
+  end
+  cookbook_file "/etc/sudoers.d/aegir" do
+    source "sudoers.d/aegir"
+    action :create
+    backup false
+    owner "root"
+    group "root"
+    mode 00440
   end
 
+#  file "/etc/sudoers.d/aegir" do
+#    owner "root"
+#    group "root"
+#    mode 00440
+#    action :create
+#    content "Defaults:aegir  !requiretty
+#aegir ALL=NOPASSWD: /usr/sbin/apache2ctl"
+#  end
+
   # symlink apache config
-  link "/var/aegir/config/apache.conf" do
-    to "/etc/apache2/conf.d/aegir.conf"
+  link "/etc/apache2/conf.d/aegir.conf" do
+    to "/var/aegir/apache.conf"
   end
 
 # a2enmod rewrite
