@@ -25,3 +25,6 @@ end
 link "/usr/local/bin/drush" do
   to "/usr/share/drush/drush"
 end
+execute "Run Drush to ensure it works." do
+  command "sudo drush"
+end
