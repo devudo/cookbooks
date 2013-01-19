@@ -15,8 +15,13 @@ service "apache2" do
   action :enable
 end
 
-php_pear "drush" do
-  action :install_if_missing
-  channel "pear.drush.org"
-  version "4.6.0"
+# Setup Drush
+git "Install Drush" do
+  repository "http://git.drupal.org/project/drush.git"
+  reference "7.x-4.6"
+  action :sync
+  destination "/usr/share/drush"
+end
+link "/usr/local/bin/drush" do
+  to "/usr/share/drush/drush"
 end
