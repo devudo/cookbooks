@@ -1,36 +1,48 @@
 # DEVUDO dev users
+userlist = ['jon', 'jacinto', 'kory']
 
 # Users
-user "jon" do
-  comment "Jon Pugh"
-  home "/home/jon"
-  shell "/bin/bash"
-  system true
-end
-group "sudo" do
-  action :modify
-  members "jon"
-  append true
-end 
-directory "/home/jon" do
-  owner "jon"
-  group "jon"
-  mode "0755"
-  action :create
-  recursive true
-end 
-directory "/home/jon/.ssh" do
-  owner "jon"
-  group "jon"
-  mode "0755"
-  action :create
-  recursive true
-end 
-cookbook_file "/home/jon/.ssh/authorized_keys" do
-  source "ssh/id_rsa.pub.jon"
-  action :create
-  backup false
-  owner "jon"
-  group "jon"
-  mode "0600"
-end
+userlist.each{|username|
+  user "#{username}" do
+    home "/home/#{username}"
+    shell "/bin/bash"
+    system true
+  end
+  group "sudo" do
+    action :modify
+    members "#{username}"
+    append true
+  end 
+  directory "/home/#{username}" do
+    owner "#{username}"
+    group "#{username}"
+    mode "0755"
+    action :create
+    recursive true
+  end 
+  directory "/home/#{username}/.ssh" do
+    owner "#{username}"
+    group "#{username}"
+    mode "0755"
+    action :create
+    recursive true
+  end 
+  cookbook_file "/home/#{username}/.ssh/authorized_keys" do
+    source "ssh/id_rsa.pub.#{username}"
+    action :create
+    backup false
+    owner "#{username}"
+    group "#{username}"
+    mode "0600"
+  end
+  
+  # Aegir user access
+  cookbook_file "/home/#{username}/.ssh/authorized_keys" do
+    source "ssh/id_rsa.pub.#{username}"
+    action :create
+    backup false
+    owner "#{username}"
+    group "#{username}"
+    mode "0600"
+  end
+}
