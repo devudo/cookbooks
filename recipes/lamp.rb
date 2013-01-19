@@ -1,5 +1,5 @@
 #
-#
+# Base LAMP development server
 #
 
 # Install required apt packages.
@@ -15,6 +15,11 @@ service "apache2" do
   action :enable
 end
 
+# Enable mod_rewrite
+execute "Enable mod_rewrite" do
+  command "a2enmod rewrite"
+end
+
 # Setup Drush
 git "Install Drush" do
   repository "http://git.drupal.org/project/drush.git"
@@ -26,5 +31,6 @@ link "/usr/local/bin/drush" do
   to "/usr/share/drush/drush"
 end
 execute "Run Drush to ensure it works." do
+  only_if "drush"
   command "sudo drush"
 end
