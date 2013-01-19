@@ -24,6 +24,15 @@ directory "/var/aegir" do
   recursive true
 end
 
+# prepare drush commands folder
+directory "/usr/share/drush/commands" do
+  owner "aegir"
+  group "aegir"
+  mode 00755
+  action :create
+  recursive true
+end
+
 # Make sure the Aegir user is allowed to restart apache
 package 'sudo' do
   action :install
@@ -43,6 +52,11 @@ link "/etc/apache2/conf.d/aegir.conf" do
 end
 
 # Enable mod_rewrite
-exec "Enable mod_rewrite" do
+execute "Enable mod_rewrite" do
   command "a2enmod rewrite"
+end
+
+# Drush dl provision
+execute "Download provision" do
+  command "drush dl provision -y"
 end
