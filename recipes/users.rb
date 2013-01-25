@@ -12,6 +12,11 @@ userlist.each{|username|
     action :modify
     members "#{username}"
     append true
+  end
+  group "devs" do
+    action :modify
+    members "#{username}"
+    append true
   end 
   directory "/home/#{username}" do
     owner "#{username}"
