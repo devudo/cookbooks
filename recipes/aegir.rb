@@ -2,6 +2,7 @@
 # From http://community.aegirproject.org/installing/manual
 
 # Aegir needs lamp
+require_recipe "devudo::users"
 require_recipe "devudo::lamp"
 
 # Create the Aegir user
@@ -57,3 +58,5 @@ execute "Download provision" do
   only_if "drush"
   command "drush dl provision -y"
 end
+
+# @TODO: Install devmaster platform!
