@@ -40,6 +40,33 @@ directory "/var/aegir/config" do
   recursive true
 end
 
+# Setup its ssh keys
+cookbook_file "/var/aegir/.ssh/id_rsa" do
+  source "ssh/aegir/id_rsa"
+  action :create
+  backup false
+  owner "aegir"
+  group "aegir"
+  mode "0600"
+end
+cookbook_file "/var/aegir/.ssh/id_rsa.pub" do
+  source "ssh/aegir/id_rsa.pub"
+  action :create
+  backup false
+  owner "aegir"
+  group "aegir"
+  mode "0600"
+end
+cookbook_file "/var/aegir/.ssh/config" do
+  source "ssh/aegir/config"
+  action :create
+  backup false
+  owner "aegir"
+  group "aegir"
+  mode "0600"
+end
+
+
 # prepare drush commands folder
 directory "/usr/share/drush/commands" do
   owner "aegir"
@@ -83,11 +110,12 @@ execute "Download provision" do
 end
 
 bash "Start the Aegir install process" do
-    user "aegir"
-    group "www-data"
-    environment ({'HOME' => "#{node[:aegir][:dir]}"})
-    cwd "#{node[:aegir][:dir]}"
-    code <<-EOH
+  not_if "drush sa @hostmaster"
+  user "aegir"
+  group "www-data"
+  environment ({'HOME' => "#{node[:aegir][:dir]}"})
+  cwd "#{node[:aegir][:dir]}"
+  code <<-EOH
   drush hostmaster-install #{node[:aegir][:frontend]} \
   --site="#{node[:aegir][:frontend]}" \
   --aegir_host="#{node[:aegir][:fqdn]}" \
