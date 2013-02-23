@@ -52,6 +52,14 @@ link "/etc/apache2/conf.d/aegir.conf" do
   to "/var/aegir/apache.conf"
 end
 
+# set the root MYSQL password
+# (eg. platforms other than debian/ubuntu & drop-in mysql replacements)
+execute "assign-root-password" do
+  command "\"#{node[:mysql][:mysqladmin_bin]}\" -u root password \"#{node[:mysql][:server_root_password]}\""
+  action :run
+  only_if "\"#{node[:mysql][:mysql_bin]}\" -u root -e 'show databases;'"
+end
+
 # Get provision.
 execute "Download provision" do
   # If drush runs as root, provision is not installed yet.
@@ -59,10 +67,25 @@ execute "Download provision" do
   command "drush dl provision-6.x-1.9 -y --destination=/var/aegir/.drush"
 end
 
-# Install hostmaster
-# @TODO: Figure out how to use an attribute to decide which version to install.
-execute "Install Hostmaster" do
-  # Only install if @hostmaster is not found yet.
-  #not_if "drush @hostmaster status"
-  #command "drush hostmaster-install"
-end
+bash "Start the Aegir install process" do
+    user "aegir"
+    group "www-data"
+    environment ({'HOME' => "#{node[:aegir][:dir]}"})
+    cwd "#{node[:aegir][:dir]}"
+    code <<-EOH
+  drush hostmaster-install #{node[:aegir][:frontend]} \
+  --site="#{node[:aegir][:frontend]}" \
+  --aegir_host="#{node[:aegir][:fqdn]}" \
+  --http_service_type="apache" \
+  --aegir_db_user="root" \
+  --aegir_db_pass="#{node[:mysql][:server_root_password]}" \
+  --db_service_type="mysql" \
+  --db_port=3306 \
+  --aegir_db_host="#{node[:aegir][:db_host]}" \
+  --client_email="#{node[:aegir][:client_email]}" \
+  --script_user="aegir" \
+  --web_group="www-data" \
+  --profile=hostmaster \
+  --yes
+  EOH
+  end
