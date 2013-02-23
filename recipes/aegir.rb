@@ -24,6 +24,13 @@ directory "/var/aegir" do
   action :create
   recursive true
 end
+directory "/var/aegir/.drush" do
+  owner "aegir"
+  group "aegir"
+  mode 00755
+  action :create
+  recursive true
+end
 
 # prepare drush commands folder
 directory "/usr/share/drush/commands" do
