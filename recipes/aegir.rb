@@ -4,6 +4,7 @@
 # Aegir needs lamp
 require_recipe "devudo::users"
 require_recipe "devudo::lamp"
+require_recipe "devudo::mysql_secure_installation"
 
 # Create the Aegir user
 user "aegir" do
@@ -25,6 +26,13 @@ directory "/var/aegir" do
   recursive true
 end
 directory "/var/aegir/.drush" do
+  owner "aegir"
+  group "aegir"
+  mode 00755
+  action :create
+  recursive true
+end
+directory "/var/aegir/config" do
   owner "aegir"
   group "aegir"
   mode 00755
@@ -56,7 +64,7 @@ end
 
 # symlink apache config
 link "/etc/apache2/conf.d/aegir.conf" do
-  to "/var/aegir/apache.conf"
+  to "/var/aegir/config/apache.conf"
 end
 
 # set the root MYSQL password
