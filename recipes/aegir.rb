@@ -56,7 +56,13 @@ end
 execute "Download provision" do
   # If drush runs as root, provision is not installed yet.
   only_if "drush"
-  command "drush dl provision -y"
+  command "drush dl provision-6.x-1.9 -y --destination=/var/aegir/.drush"
 end
 
-# @TODO: Install devmaster platform!
+# Install hostmaster
+# @TODO: Figure out how to use an attribute to decide which version to install.
+execute "Install Hostmaster" do
+  # Only install if @hostmaster is not found yet.
+  #not_if "drush @hostmaster status"
+  #command "drush hostmaster-install"
+end
