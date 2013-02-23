@@ -1,6 +1,11 @@
 # DEVUDO dev users
 userlist = ['jon', 'jacinto', 'kory']
 
+group "devs" do
+  action :create
+  group_name "devs"
+end
+
 # Users
 userlist.each{|username|
   user "#{username}" do
