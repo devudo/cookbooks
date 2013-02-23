@@ -45,14 +45,4 @@ userlist.each{|username|
     group "#{username}"
     mode "0600"
   end
-  
-  # Aegir user access
-  cookbook_file "/home/#{username}/.ssh/authorized_keys" do
-    source "ssh/id_rsa.pub.#{username}"
-    action :create
-    backup false
-    owner "#{username}"
-    group "#{username}"
-    mode "0600"
-  end
 }
