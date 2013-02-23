@@ -98,6 +98,8 @@ bash "Start the Aegir install process" do
   --db_port=3306 \
   --aegir_db_host="#{node[:aegir][:db_host]}" \
   --client_email="#{node[:aegir][:client_email]}" \
+  --version="#{node[:aegir][:version]}" \
+  --makefile="#{node[:aegir][:makefile]}" \
   --script_user="aegir" \
   --web_group="www-data" \
   --profile=hostmaster \
