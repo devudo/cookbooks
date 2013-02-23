@@ -1,4 +1,5 @@
 
+
 directory "/src" do
   owner "root"
   group "devs"
@@ -12,4 +13,7 @@ git "DevShop Provision Source" do
     reference "6.x-1.x"
     action :sync
     destination "/src/devshop_provision"
+    owner "root"
+    group "devs"
+    mode "0775"
 end
