@@ -4,7 +4,6 @@
 # Aegir needs lamp
 require_recipe "devudo::users"
 require_recipe "devudo::lamp"
-require_recipe "devudo::mysql_secure_installation"
 
 # Create the Aegir user
 user "aegir" do
@@ -26,6 +25,13 @@ directory "/var/aegir" do
   recursive true
 end
 directory "/var/aegir/.drush" do
+  owner "aegir"
+  group "aegir"
+  mode 00755
+  action :create
+  recursive true
+end
+directory "/var/aegir/.ssh" do
   owner "aegir"
   group "aegir"
   mode 00755
@@ -101,6 +107,8 @@ execute "assign-root-password" do
   action :run
   only_if "\"#{node[:mysql][:mysql_bin]}\" -u root -e 'show databases;'"
 end
+require_recipe "devudo::mysql_secure_installation"
+
 
 # Get provision.
 execute "Download provision" do
@@ -110,7 +118,7 @@ execute "Download provision" do
 end
 
 bash "Start the Aegir install process" do
-  not_if "drush sa @hostmaster"
+  not_if "drush @hostmaster status"
   user "aegir"
   group "www-data"
   environment ({'HOME' => "#{node[:aegir][:dir]}"})
@@ -127,7 +135,6 @@ bash "Start the Aegir install process" do
   --aegir_db_host="#{node[:aegir][:db_host]}" \
   --client_email="#{node[:aegir][:client_email]}" \
   --version="#{node[:aegir][:version]}" \
-  --makefile="#{node[:aegir][:makefile]}" \
   --script_user="aegir" \
   --web_group="www-data" \
   --profile=hostmaster \
