@@ -1,16 +1,7 @@
 #
 # Base LAMP development server
 #
-
-# apt-get update to get package info
-execute "apt-get-update-periodic" do
-  command "apt-get update"
-  ignore_failure true
-  only_if do
-    File.exists?('/var/lib/apt/periodic/update-success-stamp') &&
-    File.mtime('/var/lib/apt/periodic/update-success-stamp') < Time.now - 86400
-  end
-end
+require_recipe "apt"
 
 # Install required apt packages.
 %w{ apache2 php5 php5-cli php5-gd php5-mysql php-pear php5-curl mysql-server postfix sudo rsync git-core unzip }.each do |package_name|
