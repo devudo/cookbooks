@@ -1,5 +1,5 @@
-default[:aegir][:frontend] = "hello.devudo.com"
-default[:aegir][:fqdn] = "hello.devudo.com"
+default[:aegir][:frontend] = "domain.com"
+default[:aegir][:fqdn] = "domain.com"
 default[:aegir][:client_email] = "jon@thinkdrop.net"
 
 default[:aegir][:version] = "6.x-1.x"
