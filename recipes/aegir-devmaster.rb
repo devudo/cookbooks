@@ -25,6 +25,12 @@ git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/devshop_hosting" do
     action :sync
     user "aegir"
 end
+git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/ctools" do
+    repository "http://git.drupal.org/project/ctools.git"
+    reference "6.x-1.10"
+    action :sync
+    user "aegir"
+end
 git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/hosting_solr" do
     repository "http://git.drupal.org/project/hosting_solr.git"
     reference "6.x-1.x"
