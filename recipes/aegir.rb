@@ -111,10 +111,12 @@ require_recipe "devudo::mysql_secure_installation"
 
 
 # Get provision.
-execute "Download provision" do
-  # If drush runs as root, provision is not installed yet.
-  only_if "drush"
-  command "drush dl provision-6.x-1.9 -y --destination=/var/aegir/.drush"
+git "/var/aegir/.drush/provision" do
+  repository "http://git.drupal.org/project/provision.git"
+  reference "6.x-1.9"
+  action :export
+  user "aegir"
+  group "aegir"
 end
 
 bash "Start the Aegir install process" do

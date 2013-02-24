@@ -10,30 +10,29 @@ require_recipe "devudo::aegir"
 # Add devudo hotness
 
 # Hostmaster enhancements
-git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules" do
+git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/devudo_hosting" do
     repository "git@github.com:devudo/devudo_hosting.git"
     reference "6.x-1.x"
-    action :sync
+    action :export
     user "aegir"
 end
-git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules" do
+git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/hosting_logs" do
     repository "http://git.drupal.org/project/hosting_logs.git"
     reference "6.x-1.x"
-    action :sync
+    action :export
     user "aegir"
 end
 
 # Provision tools
-git "/var/aegir/.drush" do
+git "/var/aegir/.drush/devudo_provision" do
     repository "git@github.com:devudo/devudo_provision.git"
     reference "6.x-1.x"
-    action :sync
+    action :export
     user "aegir"
 end
-
-git "/var/aegir/.drush" do
+git "/var/aegir/.drush/provision_logs" do
     repository "http://git.drupal.org/project/provision_logs.git"
     reference "6.x-1.x"
-    action :sync
+    action :export
     user "aegir"
 end
