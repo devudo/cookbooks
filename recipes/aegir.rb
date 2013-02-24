@@ -120,7 +120,9 @@ git "/var/aegir/.drush/provision" do
 end
 
 bash "Start the Aegir install process" do
-  not_if "drush @hostmaster status"
+  not_if do
+    File.exists?("#{node[:aegir][:dir]}/hostmaster-#{node[:aegir][:version]}")
+  end
   user "aegir"
   group "www-data"
   environment ({'HOME' => "#{node[:aegir][:dir]}"})
