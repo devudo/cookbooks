@@ -8,36 +8,32 @@
 require_recipe "devudo::aegir"
 
 # Add devudo hotness
-directory "/var/aegir/src" do
-  owner "aegir"
-  group "aegir"
-  mode "0755"
-  action :create
-  recursive true
-end
 
-
-git "Devudo Hosting Source" do
+# Hostmaster enhancements
+git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules" do
     repository "git@github.com:devudo/devudo_hosting.git"
     reference "6.x-1.x"
     action :sync
-    destination "/var/aegir/src/devudo_hosting"
+    user "aegir"
 end
-# Symlink to hostmaster
-# @TODO: User attributes
-link "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/devudo_hosting" do
-  to "/var/aegir/src/devudo_hosting"
+git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules" do
+    repository "http://git.drupal.org/project/hosting_logs.git"
+    reference "6.x-1.x"
+    action :sync
+    user "aegir"
 end
 
-
-git "Devudo Provision Source" do
+# Provision tools
+git "/var/aegir/.drush" do
     repository "git@github.com:devudo/devudo_provision.git"
     reference "6.x-1.x"
     action :sync
-    destination "/var/aegir/src/devudo_provision"
+    user "aegir"
 end
-# Symlink to hostmaster
-# @TODO: User attributes
-link "/var/aegir/.drush/devudo_provision" do
-  to "/var/aegir/src/devudo_provision"
+
+git "/var/aegir/.drush" do
+    repository "http://git.drupal.org/project/provision_logs.git"
+    reference "6.x-1.x"
+    action :sync
+    user "aegir"
 end
