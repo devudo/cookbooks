@@ -1,5 +1,6 @@
 # DEVUDO dev users
-userlist = ['jon', 'jacinto', 'kory']
+#userlist = ['jon', 'jacinto', 'kory']
+userlist = node[:devudo][:users]
 
 group "devs" do
   action :create
