@@ -60,12 +60,12 @@ git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/ctools" do
     action :sync
     user "aegir"
 end
-git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/hosting_solr" do
-    repository "http://git.drupal.org/project/hosting_solr.git"
-    reference "6.x-1.x"
-    action :sync
-    user "aegir"
-end
+#git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/hosting_solr" do
+#    repository "http://git.drupal.org/project/hosting_solr.git"
+#    reference "6.x-1.x"
+#    action :sync
+#    user "aegir"
+#end
 git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/hosting_logs" do
     repository "http://git.drupal.org/project/hosting_logs.git"
     reference "6.x-1.x"
@@ -92,9 +92,9 @@ git "/var/aegir/.drush/provision_logs" do
     action :sync
     user "aegir"
 end
-git "/var/aegir/.drush/provision_solr" do
-    repository "http://git.drupal.org/project/provision_solr.git"
-    reference "6.x-1.x"
-    action :sync
-    user "aegir"
-end
+#git "/var/aegir/.drush/provision_solr" do
+#    repository "http://git.drupal.org/project/provision_solr.git"
+#    reference "6.x-1.x"
+#    action :sync
+#    user "aegir"
+#end
