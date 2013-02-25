@@ -8,6 +8,14 @@
 require_recipe "devudo::aegir"
 
 # Add devudo hotness
+# prepare drush commands folder
+directory "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/" do
+  owner "aegir"
+  group "aegir"
+  mode 00755
+  action :create
+  recursive true
+end
 
 # Hostmaster enhancements
 git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/devudo_hosting" do
