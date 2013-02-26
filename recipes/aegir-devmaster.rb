@@ -1,5 +1,6 @@
-
-# DEVMASTER!
+####################
+# DEVUDO DEVMASTER #
+####################
 
 # First get Aegir (which also gets lamp and users)
 
@@ -25,7 +26,7 @@ group "devs" do
   group_name "devs"
 end
 
-## Users
+# @TODO: Add keys to access aegir account ?  Should/shouldn't we? Another method?
 #node[:devudo][:users].each{|username|
 #  cookbook_file "/var/aegir/.ssh/id_rsa.pub.#{username}" do
 #    source "ssh/id_rsa.pub.#{username}"
