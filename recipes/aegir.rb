@@ -63,8 +63,16 @@ cookbook_file "/var/aegir/.ssh/id_rsa.pub" do
   group "aegir"
   mode "0600"
 end
-cookbook_file "/var/aegir/.ssh/config" do
-  source "ssh/aegir/config"
+cookbook_file "/var/aegir/.ssh/id_rsa.pub" do
+  source "ssh/aegir/id_rsa.pub"
+  action :create
+  backup false
+  owner "aegir"
+  group "aegir"
+  mode "0600"
+end
+file "/var/aegir/.ssh/authorized_keys" do
+  content node[:aegir][:authorized_keys]
   action :create
   backup false
   owner "aegir"
@@ -144,4 +152,4 @@ bash "Start the Aegir install process" do
   --profile=hostmaster \
   --yes
   EOH
-  end
+end
