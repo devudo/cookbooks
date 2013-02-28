@@ -11,5 +11,7 @@ default[:mysql][:server_root_password] = "abcd12345678"
 default[:mysql][:mysql_bin]            = "/usr/bin/mysql"
 default[:mysql][:mysqladmin_bin]       = "/usr/bin/mysqladmin"
 
-default[:devudo][:users]       = ['jon' => '', 'jacinto' => '', 'kory' => '']
+default[:devudo][:users] = {
+  'jon' => '',
+}
 
