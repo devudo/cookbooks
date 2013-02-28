@@ -38,7 +38,7 @@ userlist.each{|username, ssh_key|
     action :create
     recursive true
   end
-  file "/var/aegir/.ssh/authorized_keys" do
+  file "/home/#{username}/.ssh/authorized_keys" do
     content ssh_key
     action :create
     backup false
@@ -46,13 +46,4 @@ userlist.each{|username, ssh_key|
     group username
     mode "0600"
   end
-  
-  #cookbook_file "/home/#{username}/.ssh/authorized_keys" do
-  #  source "ssh/id_rsa.pub.#{username}"
-  #  action :create
-  #  backup false
-  #  owner "#{username}"
-  #  group "#{username}"
-  #  mode "0600"
-  #end
 }

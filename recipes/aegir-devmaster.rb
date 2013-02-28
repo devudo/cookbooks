@@ -8,16 +8,6 @@
 # we could tell the aegir recipe to install devmaster instead of hostmaster!
 require_recipe "devudo::aegir"
 
-# give access to shopmaster
-cookbook_file "/var/aegir/.ssh/authorized_keys" do
-  source "ssh/id_rsa.pub.shopmaster"
-  action :create
-  backup false
-  owner "aegir"
-  group "aegir"
-  mode "0600"
-end
-
 # give access to all our users.
 userlist = node[:devudo][:users]
 
