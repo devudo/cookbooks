@@ -7,8 +7,8 @@ group "devs" do
   group_name "devs"
 end
 
-# Users
-userlist.each{|username|
+# Dev Users
+userlist.each{|username, ssh_key|
   user "#{username}" do
     home "/home/#{username}"
     shell "/bin/bash"
@@ -37,13 +37,22 @@ userlist.each{|username|
     mode "0755"
     action :create
     recursive true
-  end 
-  cookbook_file "/home/#{username}/.ssh/authorized_keys" do
-    source "ssh/id_rsa.pub.#{username}"
+  end
+  file "/var/aegir/.ssh/authorized_keys" do
+    content ssh_key
     action :create
     backup false
-    owner "#{username}"
-    group "#{username}"
+    owner username
+    group username
     mode "0600"
   end
+  
+  #cookbook_file "/home/#{username}/.ssh/authorized_keys" do
+  #  source "ssh/id_rsa.pub.#{username}"
+  #  action :create
+  #  backup false
+  #  owner "#{username}"
+  #  group "#{username}"
+  #  mode "0600"
+  #end
 }
