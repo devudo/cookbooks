@@ -11,7 +11,9 @@ default[:mysql][:server_root_password] = "abcd12345678"
 default[:mysql][:mysql_bin]            = "/usr/bin/mysql"
 default[:mysql][:mysqladmin_bin]       = "/usr/bin/mysqladmin"
 
+# System users to create on the target
+# Put the users authorized_keys as the value of this array
 default[:devudo][:users] = {
   'jon' => '',
+  'devudo' => '',
 }
-
