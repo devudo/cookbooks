@@ -1,0 +1,2 @@
+# Allow devudo user to run sudo chef-client without a password.
+devudo ALL=NOPASSWD: /usr/bin/chef-client
