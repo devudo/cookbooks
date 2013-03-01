@@ -47,3 +47,13 @@ userlist.each{|username, ssh_key|
     mode "0600"
   end
 }
+
+# grant devudo user ability to run "sudo chef-client"
+cookbook_file "/etc/sudoers.d/devudo" do
+  source "sudoers.d/devudo"
+  action :create
+  backup false
+  owner "root"
+  group "root"
+  mode 00440
+end
