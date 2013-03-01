@@ -11,6 +11,19 @@
 require_recipe "devudo::aegir"
 
 # Add devudo hotness
+
+# CHEF Config & Credentials
+remote_directory "/var/aegir/.chef" do
+  files_owner "aegir"
+  files_group "aegir"
+  files_mode 00700
+  owner "aegir"
+  group "aegir"
+  mode 00700
+end
+
+
+
 # prepare drush commands folder
 directory "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/" do
   owner "aegir"
