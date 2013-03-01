@@ -16,17 +16,6 @@ group "devs" do
   group_name "devs"
 end
 
-# @TODO: Add keys to access aegir account ?  Should/shouldn't we? Another method?
-#node[:devudo][:users].each{|username|
-#  cookbook_file "/var/aegir/.ssh/id_rsa.pub.#{username}" do
-#    source "ssh/id_rsa.pub.#{username}"
-#    action :create
-#    backup false
-#    owner "#{username}"
-#    group "#{username}"
-#    mode "0600"
-#  end
-#}
 
 # prepare drush commands folder
 directory "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/" do
