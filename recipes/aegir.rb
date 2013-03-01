@@ -12,6 +12,7 @@ user "aegir" do
   shell "/bin/bash"
   system true
 end
+# Add aegir to www-data group
 group "www-data" do
   action :modify
   members "aegir"
@@ -71,6 +72,11 @@ cookbook_file "/var/aegir/.ssh/id_rsa.pub" do
   group "aegir"
   mode "0600"
 end
+
+# Here we take the attribute and save the authorized_keys file.
+# @TODO: Right now this is done in PHP, should we just use our special
+#  "devudo::users" attribute? Maybe we have to save which keys for aegir.
+# @TODO: Lets try and let everyone connect to their own user account.
 file "/var/aegir/.ssh/authorized_keys" do
   content node[:aegir][:authorized_keys]
   action :create
@@ -79,7 +85,6 @@ file "/var/aegir/.ssh/authorized_keys" do
   group "aegir"
   mode "0600"
 end
-
 
 # prepare drush commands folder
 directory "/usr/share/drush/commands" do
@@ -127,6 +132,8 @@ git "/var/aegir/.drush/provision" do
   group "aegir"
 end
 
+
+# @TODO Make this its own recipe with just enough attributes for us.
 bash "Start the Aegir install process" do
   not_if do
     File.exists?("#{node[:aegir][:dir]}/hostmaster-#{node[:aegir][:version]}")
