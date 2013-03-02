@@ -13,14 +13,14 @@ require_recipe "devudo::aegir"
 # Add devudo hotness
 
 # CHEF Config & Credentials
-remote_directory "/var/aegir/.chef" do
-  files_owner "aegir"
-  files_group "aegir"
-  files_mode 00700
-  owner "aegir"
-  group "aegir"
-  mode 00700
-end
+#remote_directory "/var/aegir/.chef" do
+#  files_owner "aegir"
+#  files_group "aegir"
+#  files_mode 00700
+#  owner "aegir"
+#  group "aegir"
+#  mode 00700
+#end
 
 
 
