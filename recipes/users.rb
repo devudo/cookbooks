@@ -9,6 +9,10 @@ end
 
 # Dev Users
 userlist.each{|username, ssh_key|
+  log "message" do
+    message "[DEVUDO] Creating user: #{username}"
+    level :info
+  end
   user "#{username}" do
     home "/home/#{username}"
     shell "/bin/bash"
