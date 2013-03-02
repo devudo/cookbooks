@@ -6,3 +6,4 @@
 # versions.
 #
 devudo ALL=NOPASSWD: /usr/bin/chef-client
+devudo ALL=NOPASSWD: /usr/local/bin/chef-client
