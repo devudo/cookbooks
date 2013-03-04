@@ -4,4 +4,4 @@
 # 1.7.2p1 or later, which provide a #includedir directive, but its
 # content can be added to any regular /etc/sudoers file for earlier
 # versions.
-devudo ALL=NOPASSWD: /usr/local/bin/chef-client
+devudo ALL=NOPASSWD: /usr/bin/chef-client
