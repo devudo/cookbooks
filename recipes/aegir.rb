@@ -131,7 +131,12 @@ git "/var/aegir/.drush/provision" do
   user "aegir"
   group "aegir"
 end
-
+# Get Shop Provision
+git "/var/aegir/.drush/shop_provision" do
+    repository "git@github.com:devudo/shop_provision.git"
+    action :sync
+    user "aegir"
+end
 
 # @TODO Make this its own recipe with just enough attributes for us.
 bash "Start the Aegir install process" do

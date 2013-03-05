@@ -8,11 +8,6 @@
 # First get Aegir (which also gets lamp and users)
 
 # Need shopmaster before we can load aegir
-git "/var/aegir/.drush/shop_provision" do
-    repository "git@github.com:devudo/shop_provision.git"
-    action :sync
-    user "aegir"
-end
 require_recipe "devudo::aegir"
 
 # Add devudo hotness
