@@ -163,6 +163,7 @@ bash "Start the Aegir install process" do
   --web_group="www-data" \
   --profile="#{node[:aegir][:profile]}" \
   --makefile="#{node[:aegir][:makefile]}" \
+  --working-copy \
   --yes
   EOH
 end
