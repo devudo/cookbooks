@@ -162,6 +162,7 @@ bash "Start the Aegir install process" do
   --script_user="aegir" \
   --web_group="www-data" \
   --profile="#{node[:aegir][:profile]}" \
+  --makefile="#{node[:aegir][:makefile]}" \
   --yes
   EOH
 end
