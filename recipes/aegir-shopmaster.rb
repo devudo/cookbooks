@@ -8,7 +8,7 @@
 # First get Aegir (which also gets lamp and users)
 
 # @TODO: Figure out how to change attributes here
-default[:aegir][:profile] = "hostmaster"
+node.override[:aegir][:profile] = "hostmaster"
 require_recipe "devudo::aegir"
 
 # Add devudo hotness
