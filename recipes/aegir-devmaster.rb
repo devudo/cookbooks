@@ -3,6 +3,7 @@
 ####################
 
 # First get Aegir (which also gets lamp and users)
+default[:aegir][:profile] = "devmaster"
 require_recipe "devudo::aegir"
 
 # Make sure repo is up to date
