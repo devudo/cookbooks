@@ -131,7 +131,10 @@ git "/var/aegir/.drush/provision" do
   user "aegir"
   group "aegir"
 end
+
 # Get Shop Provision
+# @TODO: This shouldn't be in all aegir's! only shopmasters
+# @TODO: Use devudo_provision for all aegir installs.
 git "/var/aegir/.drush/shop_provision" do
     repository "git@github.com:devudo/shop_provision.git"
     action :sync
