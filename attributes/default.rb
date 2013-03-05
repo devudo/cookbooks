@@ -6,6 +6,7 @@ default[:aegir][:version] = "6.x-1.x"
 default[:aegir][:authorized_keys] = ""
 default[:aegir][:dir] = "/var/aegir"
 default[:aegir][:db_host] = "localhost"
+default[:aegir][:profile] = "hostmaster"
 
 default[:mysql][:server_root_password] = "abcd12345678"
 default[:mysql][:mysql_bin]            = "/usr/bin/mysql"
