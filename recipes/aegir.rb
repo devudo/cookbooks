@@ -136,14 +136,14 @@ end
 # @TODO Make this its own recipe with just enough attributes for us.
 bash "Start the Aegir install process" do
   not_if do
-    File.exists?("#{node[:aegir][:dir]}/hostmaster-#{node[:aegir][:version]}")
+    File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
   end
   user "aegir"
   group "www-data"
   environment ({'HOME' => "#{node[:aegir][:dir]}"})
   cwd "#{node[:aegir][:dir]}"
   code <<-EOH
-  drush hostmaster-install #{node[:aegir][:frontend]} \
+  drush #{node[:aegir][:profile]}-install #{node[:aegir][:frontend]} \
   --site="#{node[:aegir][:frontend]}" \
   --aegir_host="#{node[:aegir][:fqdn]}" \
   --http_service_type="apache" \
@@ -156,7 +156,7 @@ bash "Start the Aegir install process" do
   --version="#{node[:aegir][:version]}" \
   --script_user="aegir" \
   --web_group="www-data" \
-  --profile=hostmaster \
+  --profile="#{node[:aegir][:profile]}" \
   --yes
   EOH
 end

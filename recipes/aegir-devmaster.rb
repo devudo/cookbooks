@@ -3,10 +3,16 @@
 ####################
 
 # First get Aegir (which also gets lamp and users)
-
-# @TODO: If we were to change the attributes that aegir.rb is expecting here,
-# we could tell the aegir recipe to install devmaster instead of hostmaster!
 require_recipe "devudo::aegir"
+
+# Make sure repo is up to date
+git "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}" do
+  repository "git@github.com:devudo/devmaster.git"
+  reference "6.x-1.x"
+  action :sync
+  user "aegir"
+  group "aegir"
+end
 
 # give access to all our users.
 userlist = node[:devudo][:users]
