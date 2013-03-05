@@ -1,6 +1,1 @@
-Host devudo.com
-  StrictHostKeyChecking no
-Host github.com
-  StrictHostKeyChecking no
-Host git.drupal.org
-  StrictHostKeyChecking no
+StrictHostKeyChecking no
