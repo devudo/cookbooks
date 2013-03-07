@@ -3,12 +3,8 @@
 ####################
 
 # First get Aegir (which also gets lamp and users)
-<<<<<<< HEAD
 node.override[:aegir][:profile] = "devmaster"
 include_recipe "devudo::aegir"
-=======
-require_recipe "devudo::aegir"
->>>>>>> c5d00abec973384a1ab49ca6a512f12a1257ac8a
 
 aegir_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
 
