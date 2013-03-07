@@ -4,6 +4,8 @@
 # Aegir needs lamp
 include_recipe "devudo::users"
 include_recipe "devudo::lamp"
+include_recipe "devudo::mysql_secure_installation"
+
 
 # Create the Aegir user
 user "aegir" do
@@ -112,15 +114,15 @@ end
 link "/etc/apache2/conf.d/aegir.conf" do
   to "/var/aegir/config/apache.conf"
 end
-
-# set the root MYSQL password
-# (eg. platforms other than debian/ubuntu & drop-in mysql replacements)
-execute "assign-root-password" do
-  command "\"#{node[:mysql][:mysqladmin_bin]}\" -u root password \"#{node[:mysql][:server_root_password]}\""
-  action :run
-  only_if "\"#{node[:mysql][:mysql_bin]}\" -u root -e 'show databases;'"
-end
-include_recipe "devudo::mysql_secure_installation"
+#
+## set the root MYSQL password
+## (eg. platforms other than debian/ubuntu & drop-in mysql replacements)
+#execute "assign-root-password" do
+#  command "\"#{node[:mysql][:mysqladmin_bin]}\" -u root password \"#{node[:mysql][:server_root_password]}\""
+#  action :run
+#  only_if "\"#{node[:mysql][:mysql_bin]}\" -u root -e 'show databases;'"
+#end
+#include_recipe "devudo::mysql_secure_installation"
 
 
 # Get provision.
@@ -171,5 +173,6 @@ end
 
 bash "Save SSH key to a variable" do
   user "aegir"
+  group "aegir"
   code 'drush @hostmaster vset devshop_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
 end
