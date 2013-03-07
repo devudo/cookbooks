@@ -4,6 +4,7 @@
 
 # First get Aegir (which also gets lamp and users)
 node.override[:aegir][:profile] = "devmaster"
+node.override[:aegir][:makefile] = "/var/aegir/.drush/devudo_provision/devmaster.make"
 include_recipe "devudo::aegir"
 
 aegir_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
