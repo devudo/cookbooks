@@ -64,8 +64,8 @@ cookbook_file "/var/aegir/.ssh/id_rsa.pub" do
   group "aegir"
   mode "0600"
 end
-cookbook_file "/var/aegir/.ssh/id_rsa.pub" do
-  source "ssh/aegir/id_rsa.pub"
+cookbook_file "/var/aegir/.ssh/config" do
+  source "ssh/aegir/config"
   action :create
   backup false
   owner "aegir"
