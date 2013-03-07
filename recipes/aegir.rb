@@ -145,7 +145,7 @@ bash "Start the Aegir install process" do
     File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
   end
   user "aegir"
-  group "www-data"
+  group "aegir"
   environment ({'HOME' => "#{node[:aegir][:dir]}"})
   cwd "#{node[:aegir][:dir]}"
   code <<-EOH
@@ -164,6 +164,12 @@ bash "Start the Aegir install process" do
   --web_group="www-data" \
   --profile="#{node[:aegir][:profile]}" \
   --makefile="#{node[:aegir][:makefile]}" \
+  --working_copy \
   --yes
   EOH
+end
+
+bash "Save SSH key to a variable" do
+  user "aegir"
+  code 'drush @hostmaster vset devshop_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
 end
