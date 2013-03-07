@@ -6,8 +6,6 @@
 # This server will fire up other servers with deployed devmaster instances.
 
 # First get Aegir (which also gets lamp and users)
-
-node.override[:aegir][:profile] = "hostmaster"
 include_recipe "devudo::aegir"
 
 # Add devudo hotness
