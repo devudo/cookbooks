@@ -7,7 +7,6 @@
 
 # First get Aegir (which also gets lamp and users)
 
-# @TODO: Figure out how to change attributes here
 node.override[:aegir][:profile] = "hostmaster"
 include_recipe "devudo::aegir"
 
@@ -49,13 +48,6 @@ end
 git "/var/aegir/hostmaster-6.x-1.x/sites/all/modules/sshkey" do
     repository "http://git.drupal.org/project/sshkey.git"
     reference "6.x-2.0"
-    action :sync
-    user "aegir"
-end
-
-# Provision tools
-git "/var/aegir/.drush/shop_provision" do
-    repository "git@github.com:devudo/shop_provision.git"
     action :sync
     user "aegir"
 end

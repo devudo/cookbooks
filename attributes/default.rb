@@ -7,6 +7,7 @@ default[:aegir][:authorized_keys] = ""
 default[:aegir][:dir] = "/var/aegir"
 default[:aegir][:db_host] = "localhost"
 default[:aegir][:profile] = "hostmaster"
+default[:aegir][:makefile] = "/var/aegir/.drush/provision/aegir.make"
 
 default[:mysql][:server_root_password] = "abcd12345678"
 default[:mysql][:mysql_bin]            = "/usr/bin/mysql"
