@@ -4,7 +4,7 @@
 
 # First get Aegir (which also gets lamp and users)
 node.override[:aegir][:profile] = "devmaster"
-require_recipe "devudo::aegir"
+include_recipe "devudo::aegir"
 
 # Make sure repo is up to date
 git "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}" do

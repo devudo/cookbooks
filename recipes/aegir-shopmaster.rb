@@ -9,7 +9,7 @@
 
 # @TODO: Figure out how to change attributes here
 node.override[:aegir][:profile] = "hostmaster"
-require_recipe "devudo::aegir"
+include_recipe "devudo::aegir"
 
 # Add devudo hotness
 

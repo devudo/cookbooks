@@ -2,8 +2,8 @@
 # From http://community.aegirproject.org/installing/manual
 
 # Aegir needs lamp
-require_recipe "devudo::users"
-require_recipe "devudo::lamp"
+include_recipe "devudo::users"
+include_recipe "devudo::lamp"
 
 # Create the Aegir user
 user "aegir" do
@@ -120,7 +120,7 @@ execute "assign-root-password" do
   action :run
   only_if "\"#{node[:mysql][:mysql_bin]}\" -u root -e 'show databases;'"
 end
-require_recipe "devudo::mysql_secure_installation"
+include_recipe "devudo::mysql_secure_installation"
 
 
 # Get provision.
