@@ -1,10 +1,11 @@
 #
 # Base LAMP development server
 #
-require_recipe "apt"
+include_recipe "apt"
+include_recipe "mysql::server"
 
 # Install required apt packages.
-%w{ apache2 php5 php5-cli php5-gd php5-mysql php-pear php5-curl mysql-server postfix sudo rsync git-core unzip }.each do |package_name|
+%w{ apache2 php5 php5-cli php5-gd php5-mysql php-pear php5-curl postfix sudo rsync git-core unzip }.each do |package_name|
   package package_name
 end
 

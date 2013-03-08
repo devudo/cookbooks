@@ -2,8 +2,10 @@
 # From http://community.aegirproject.org/installing/manual
 
 # Aegir needs lamp
-require_recipe "devudo::users"
-require_recipe "devudo::lamp"
+include_recipe "devudo::users"
+include_recipe "devudo::lamp"
+include_recipe "devudo::mysql_secure_installation"
+
 
 # Create the Aegir user
 user "aegir" do
@@ -112,15 +114,15 @@ end
 link "/etc/apache2/conf.d/aegir.conf" do
   to "/var/aegir/config/apache.conf"
 end
-
-# set the root MYSQL password
-# (eg. platforms other than debian/ubuntu & drop-in mysql replacements)
-execute "assign-root-password" do
-  command "\"#{node[:mysql][:mysqladmin_bin]}\" -u root password \"#{node[:mysql][:server_root_password]}\""
-  action :run
-  only_if "\"#{node[:mysql][:mysql_bin]}\" -u root -e 'show databases;'"
-end
-require_recipe "devudo::mysql_secure_installation"
+#
+## set the root MYSQL password
+## (eg. platforms other than debian/ubuntu & drop-in mysql replacements)
+#execute "assign-root-password" do
+#  command "\"#{node[:mysql][:mysqladmin_bin]}\" -u root password \"#{node[:mysql][:server_root_password]}\""
+#  action :run
+#  only_if "\"#{node[:mysql][:mysql_bin]}\" -u root -e 'show databases;'"
+#end
+#include_recipe "devudo::mysql_secure_installation"
 
 
 # Get provision.
@@ -132,11 +134,9 @@ git "/var/aegir/.drush/provision" do
   group "aegir"
 end
 
-# Get Shop Provision
-# @TODO: This shouldn't be in all aegir's! only shopmasters
-# @TODO: Use devudo_provision for all aegir installs.
-git "/var/aegir/.drush/shop_provision" do
-    repository "git@github.com:devudo/shop_provision.git"
+# Devudo Provision
+git "/var/aegir/.drush/devudo_provision" do
+    repository "git@github.com:devudo/devudo_provision.git"
     action :sync
     user "aegir"
 end
@@ -147,7 +147,7 @@ bash "Start the Aegir install process" do
     File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
   end
   user "aegir"
-  group "www-data"
+  group "aegir"
   environment ({'HOME' => "#{node[:aegir][:dir]}"})
   cwd "#{node[:aegir][:dir]}"
   code <<-EOH
@@ -166,7 +166,17 @@ bash "Start the Aegir install process" do
   --web_group="www-data" \
   --profile="#{node[:aegir][:profile]}" \
   --makefile="#{node[:aegir][:makefile]}" \
+<<<<<<< HEAD:recipes/aegir.rb
   --working-copy \
+=======
+  --working_copy \
+>>>>>>> 3b67f085a37927f6a08d52292feb6771edfe20c1:devudo/recipes/aegir.rb
   --yes
   EOH
+end
+
+bash "Save SSH key to a variable" do
+  user "aegir"
+  group "aegir"
+  code 'drush @hostmaster vset devshop_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
 end
