@@ -1,7 +1,6 @@
 #
-# Base LAMP development server
+# Base LAMPd development server
 #
-include_recipe "apt"
 include_recipe "mysql::server"
 
 # Install required apt packages.

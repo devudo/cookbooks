@@ -3,3 +3,4 @@
 # Recipe:: default
 #
 
+include_recipe "apt"
