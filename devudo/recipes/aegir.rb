@@ -166,11 +166,7 @@ bash "Start the Aegir install process" do
   --web_group="www-data" \
   --profile="#{node[:aegir][:profile]}" \
   --makefile="#{node[:aegir][:makefile]}" \
-<<<<<<< HEAD:recipes/aegir.rb
   --working-copy \
-=======
-  --working_copy \
->>>>>>> 3b67f085a37927f6a08d52292feb6771edfe20c1:devudo/recipes/aegir.rb
   --yes
   EOH
 end
