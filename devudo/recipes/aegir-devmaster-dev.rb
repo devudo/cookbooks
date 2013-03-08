@@ -6,7 +6,3 @@
 
 include_recipe "devudo::aegir"
 
-link "/var/chef/cookbooks" do
-  to "/vagrant/cookbooks"
-end
-
