@@ -170,9 +170,9 @@ bash "Start the Aegir install process" do
   --yes
   EOH
 end
-
-bash "Save SSH key to a variable" do
-  user "aegir"
-  group "aegir"
-  code 'drush @hostmaster vset devshop_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
-end
+#
+#bash "Save SSH key to a variable" do
+#  user "aegir"
+#  group "aegir"
+#  code 'drush @hostmaster vset devshop_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
+#end
