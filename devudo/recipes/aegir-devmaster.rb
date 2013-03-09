@@ -2,12 +2,13 @@
 # DEVUDO DEVMASTER #
 ####################
 
-# First get Aegir (which also gets lamp and users)
-
-include_recipe "devudo::aegir"
-
 aegir_root = node[:aegir][:dir]
 devmaster_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
+
+log "[DEVUDO] Preparing devmaster instance at #{devmaster_root}"
+
+# First get Aegir (which also gets lamp and users)
+include_recipe "devudo::aegir"
 
 # Make sure repo is up to date
 git devmaster_root do
