@@ -2,6 +2,10 @@
 # DEVUDO DEVMASTER #
 ####################
 
+# Force Override this node's attributes
+node.override[:aegir][:profile] = "devmaster"
+node.override[:aegir][:makefile] = "/var/aegir/.drush/devudo_provision/devmaster.make"
+
 aegir_root = node[:aegir][:dir]
 devmaster_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
 
