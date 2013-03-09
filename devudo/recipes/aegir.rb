@@ -4,7 +4,6 @@
 # Aegir needs lamp
 include_recipe "devudo::users"
 include_recipe "devudo::lamp"
-include_recipe "devudo::mysql_secure_installation"
 
 
 # Create the Aegir user
