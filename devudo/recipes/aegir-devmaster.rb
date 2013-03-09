@@ -14,6 +14,7 @@ git aegir_root do
   repository "git@github.com:devudo/devmaster.git"
   reference "6.x-1.x"
   action :sync
+  enable_submodules true
   user "aegir"
   group "aegir"
 end

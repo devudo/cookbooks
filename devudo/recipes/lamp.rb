@@ -1,12 +1,16 @@
 #
 # Base LAMPd development server
 #
-include_recipe "mysql::server"
+# include_recipe "mysql::server"
 
 # Install required apt packages.
-%w{ apache2 php5 php5-cli php5-gd php5-mysql php-pear php5-curl postfix sudo rsync git-core unzip }.each do |package_name|
+%w{ apache2 php5 php5-cli php5-gd php5-mysql mysql-server php-pear php5-curl postfix
+sudo rsync git-core unzip }.each do |package_name|
   package package_name
 end
+
+include_recipe "devudo::mysql_secure_installation"
+
 
 service "apache2" do
   service_name "apache2"
