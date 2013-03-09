@@ -6,6 +6,10 @@
 # This server will fire up other servers with deployed devmaster instances.
 
 # First get Aegir (which also gets lamp and users)
+
+node.set[:aegir][:profile] = "hostmaster"
+node.set[:aegir][:makefile] = "/var/aegir/.drush/provision/aegir.make"
+
 include_recipe "devudo::aegir"
 
 # Add devudo hotness
