@@ -6,3 +6,10 @@
 
 include_recipe "devudo::aegir-devmaster"
 
+# @TODO: Figure out a good way to do this... makefiles?
+directory "/var/aegir/devmaster-6.x-1.x/sites/all/modules/hosting_drush_aliases" do
+  action :delete
+end
+link "/var/aegir/devmaster-6.x-1.x/sites/all/modules/hosting_drush_aliases" do
+  to "/source/drupal/hosting_drush_aliases"
+end
