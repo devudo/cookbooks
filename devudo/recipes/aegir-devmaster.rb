@@ -14,7 +14,8 @@ log "[DEVUDO] Preparing devmaster instance at #{devmaster_root}"
 # First get Aegir (which also gets lamp and users)
 include_recipe "devudo::aegir"
 
-# Make sure repo is up to date
+# This repo was originally created with the makefile by devmaster-install
+# Make sure the repo is up to date
 git devmaster_root do
   repository "git@github.com:devudo/devmaster.git"
   reference "6.x-1.x"
