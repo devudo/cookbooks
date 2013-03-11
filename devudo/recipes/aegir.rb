@@ -158,9 +158,19 @@ bash "Start the Aegir install process" do
   --yes
   EOH
 end
-#
-#bash "Save SSH key to a variable" do
-#  user "aegir"
-#  group "aegir"
-#  code 'drush @hostmaster vset devshop_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
-#end
+
+execute "Aegir: Save SSH key to a variable" do
+  user "aegir"
+  group "aegir"
+  command 'drush @hostmaster vset devshop_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
+  environment ({'HOME' => "/var/aegir"})
+  cwd "/var/aegir"
+end
+
+execute "Aegir: verify hostmaster" do
+  user "aegir"
+  group "aegir"
+  command 'drush @hostmaster provision-verify --yes'
+  environment ({'HOME' => "/var/aegir"})
+  cwd "/var/aegir"
+end
