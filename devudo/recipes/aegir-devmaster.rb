@@ -4,7 +4,7 @@
 
 # Force Override this node's attributes
 node.set[:aegir][:profile] = "devmaster"
-node.set[:aegir][:makefile] = "/var/aegir/.drush/devudo_provision/devmaster.make"
+node.set[:aegir][:makefile] = "#{node[:aegir][:dir]}/.drush/devudo_provision/devmaster.make"
 node.set[:aegir][:hostmaster_install_command] = "devmaster-install"
 
 aegir_root = node[:aegir][:dir]
@@ -45,7 +45,7 @@ git "#{aegir_root}/.drush/provision_logs" do
     action :sync
     user "aegir"
 end
-#git "/var/aegir/.drush/provision_solr" do
+#git "#{node[:aegir][:dir]}/.drush/provision_solr" do
 #    repository "http://git.drupal.org/project/provision_solr.git"
 #    reference "6.x-1.x"
 #    action :sync

@@ -9,11 +9,11 @@ include_recipe "devudo::aegir-user"
 
 # symlink apache config
 link "/etc/apache2/conf.d/aegir.conf" do
-  to "/var/aegir/config/apache.conf"
+  to "#{node[:aegir][:dir]}/config/apache.conf"
 end
 
 # Get provision.
-git "/var/aegir/.drush/provision" do
+git "#{node[:aegir][:dir]}/.drush/provision" do
   repository "http://git.drupal.org/project/provision.git"
   reference "6.x-1.9"
   action :export
@@ -22,7 +22,7 @@ git "/var/aegir/.drush/provision" do
 end
 
 # Devudo Provision
-git "/var/aegir/.drush/devudo_provision" do
+git "#{node[:aegir][:dir]}/.drush/devudo_provision" do
     repository "git@github.com:devudo/devudo_provision.git"
     action :sync
     user "aegir"
@@ -63,14 +63,14 @@ execute "Aegir: Save SSH key to a variable" do
   user "aegir"
   group "aegir"
   command 'drush @hostmaster vset devshop_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
-  environment ({'HOME' => "/var/aegir"})
-  cwd "/var/aegir"
+  environment ({'HOME' => "#{node[:aegir][:dir]}"})
+  cwd "#{node[:aegir][:dir]}"
 end
 
 execute "Aegir: verify hostmaster" do
   user "aegir"
   group "aegir"
   command 'drush @hostmaster provision-verify --yes'
-  environment ({'HOME' => "/var/aegir"})
-  cwd "/var/aegir"
+  environment ({'HOME' => "#{node[:aegir][:dir]}"})
+  cwd "#{node[:aegir][:dir]}"
 end
