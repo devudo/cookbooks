@@ -7,7 +7,7 @@
 
 
 node.set[:aegir][:profile] = "shopmaster"
-node.set[:aegir][:makefile] = "http://devudo.github.com/build-shopmaster.make"
+node.set[:aegir][:makefile] = "#{node[:aegir][:dir]}/.drush/devudo_provision/build-shopmaster.make"
 node.set[:aegir][:hostmaster_install_command] = "devmaster-install"
 
 aegir_root = node[:aegir][:dir]
