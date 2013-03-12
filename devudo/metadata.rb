@@ -5,5 +5,6 @@ description      "Installs/Configures servers to run devudo.com"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "1.0"
 
-depends "apt"
-depends "mysql"
+%w{ apt sudo nginx mysql openssl php php-fpm }.each do |cb|
+  depends cb
+end
