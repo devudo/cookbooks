@@ -8,6 +8,8 @@ default[:aegir][:dir] = "/var/aegir"
 default[:aegir][:db_host] = "localhost"
 default[:aegir][:profile] = "hostmaster"
 default[:aegir][:makefile] = "/var/aegir/.drush/provision/aegir.make"
+default[:aegir][:hostmaster_install_command] = "hostmaster-install"
+
 
 # System users to create on the target
 # Put the users authorized_keys as the value of this array

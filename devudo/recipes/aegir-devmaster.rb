@@ -5,6 +5,7 @@
 # Force Override this node's attributes
 node.set[:aegir][:profile] = "devmaster"
 node.set[:aegir][:makefile] = "/var/aegir/.drush/devudo_provision/devmaster.make"
+node.set[:aegir][:hostmaster_install_command] = "devmaster-install"
 
 aegir_root = node[:aegir][:dir]
 devmaster_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
