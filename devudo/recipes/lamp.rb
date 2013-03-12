@@ -6,6 +6,7 @@ include_recipe "mysql::server"
 include_recipe "devudo::mysql_secure_installation"
 
 # Install required apt packages.
+# @TODO: Make these a default attribute
 %w{ apache2 php5 php5-cli php5-gd php5-mysql php-pear php5-curl postfix sudo rsync git-core unzip }.each do |package_name|
   package package_name
 end
