@@ -1,13 +1,20 @@
+#
+# This is new and experimental (to me)
+# Based mostly on https://github.com/yevgenko/cookbook-aegir/blob/master/recipes/default.rb
+
+
 
 # First get Aegir (which also gets lamp and users)
 include_recipe "devudo::users"
+include_recipe "devudo::aegir-user"
 
+include_recipe "apt"
 include_recipe "php-fpm"
 include_recipe "nginx"
 server_fqdn = node.fqdn
 
 # Required php extensions
-%w{php5-cli php5-gd php5-mysql php-apc}.each do |package|
+%w{php5-cli php5-gd php5-mysql php-apc php-pear php5-curl }.each do |package|
   package "#{package}" do
     action :upgrade
   end
@@ -19,26 +26,6 @@ end
     action :upgrade
   end
 end
-  
-# Create the Aegir user
-user "aegir" do
-  comment "Aegir Hosting Management"
-  home "#{node[:aegir][:dir]}"
-  shell "/bin/bash"
-  system true
-end
-group "www-data" do
-  action :modify
-  members "aegir"
-  append true
-end
-directory "#{node[:aegir][:dir]}" do
-  owner "aegir"
-  group "www-data"
-  mode "0755"
-  action :create
-  recursive true
-end
 
 # Make sure the Aegir user is allowed to restart Nginx
 sudo "nginx" do
@@ -46,7 +33,8 @@ sudo "nginx" do
   commands ["/etc/init.d/nginx"]
   host "ALL"
   nopasswd true # true prepends the runas_spec with NOPASSWD
-endbash "Tweak nginx.conf file and symlink aegir in place" do
+end
+bash "Tweak nginx.conf file and symlink aegir in place" do
     cwd "/etc/nginx"
     code <<-EOH
     sed -i 's/server_names_hash_bucket_size/#server_names_hash_bucket_size/' nginx.conf
