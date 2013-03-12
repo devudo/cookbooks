@@ -38,7 +38,7 @@ bash "Start the Aegir install process" do
   environment ({'HOME' => "#{node[:aegir][:dir]}"})
   cwd "#{node[:aegir][:dir]}"
   code <<-EOH
-  drush #{node[:aegir][:profile]}-install #{node[:aegir][:frontend]} \
+  drush #{node[:aegir][:hostmaster_install_command]} #{node[:aegir][:frontend]} \
   --site="#{node[:aegir][:frontend]}" \
   --aegir_host="#{node[:aegir][:fqdn]}" \
   --http_service_type="apache" \
