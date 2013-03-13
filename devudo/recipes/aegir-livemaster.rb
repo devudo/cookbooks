@@ -8,6 +8,8 @@
 include_recipe "devudo::users"
 include_recipe "devudo::aegir-user"
 
+node.set['mysql']['bind_address'] = FALSE;
+
 include_recipe "apt"
 include_recipe "php-fpm"
 include_recipe "nginx"
