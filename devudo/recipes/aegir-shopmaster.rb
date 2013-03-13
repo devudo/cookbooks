@@ -13,7 +13,7 @@ node.set[:aegir][:hostmaster_install_command] = "devmaster-install"
 # don't forget our shop_provision
 git "#{node[:aegir][:dir]}/.drush/shop_provision" do
   repository "git@github.com:devudo/shop_provision.git"
-  reference "6.x-1.x"
+  reference "master"
   action :sync
   enable_submodules true
   user "aegir"
