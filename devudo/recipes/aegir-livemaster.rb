@@ -12,6 +12,7 @@ include_recipe "apt"
 include_recipe "php-fpm"
 include_recipe "nginx"
 include_recipe "mysql::server"
+include_recipe "devudo::mysql_secure_installation"
 
 server_fqdn = node.fqdn
 
@@ -42,6 +43,14 @@ link "/etc/nginx/conf.d/aegir.conf" do
   to "#{node[:aegir][:dir]}/config/nginx.conf"
   notifies :restart, resources(:service => "nginx", :service => "php5-fpm")
 end
+
+# @TODO: remove bind-address
+# @TODO: mysql_secure_installation
+
+# @TODO!!! Grant SQL Access to this livemaster's owner devmaster
+# GRANT ALL PRIVILEGES ON *.* TO root@aegir_server_IP IDENTIFIED BY 'some_pass' WITH GRANT OPTION; FLUSH PRIVILEGES;
+# GRANT ALL PRIVILEGES ON *.* TO root@166.78.3.181 IDENTIFIED BY 'l24866yB24l06NZNN591' WITH GRANT OPTION; FLUSH PRIVILEGES;
+
 
 #bash "Tweak nginx.conf file and symlink aegir in place" do
 #    cwd "/etc/nginx"
