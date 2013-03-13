@@ -36,15 +36,22 @@ sudo "nginx" do
   host "ALL"
   nopasswd true # true prepends the runas_spec with NOPASSWD
 end
-bash "Tweak nginx.conf file and symlink aegir in place" do
-    cwd "/etc/nginx"
-    code <<-EOH
-    sed -i 's/gzip_comp_level/#gzip_comp_level/' nginx.conf
-    sed -i 's/gzip_http_version/#gzip_http_version/' nginx.conf
-    sed -i 's/gzip_min_length/#gzip_min_length/' nginx.conf
-    sed -i 's/gzip_types/#gzip_types/' nginx.conf
-    sed -i 's/gzip_proxied/#gzip_proxied/' nginx.conf
-    ln -s #{node[:aegir][:dir]}/config/nginx.conf /etc/nginx/conf.d/aegir.conf
-    EOH
-    notifies :restart, resources(:service => "nginx", :service => "php5-fpm")
+
+# symlink nginx config
+link "/etc/nginx/conf.d/aegir.conf" do
+  to "#{node[:aegir][:dir]}/config/nginx.conf"
+  notifies :restart, resources(:service => "nginx", :service => "php5-fpm")
 end
+
+#bash "Tweak nginx.conf file and symlink aegir in place" do
+#    cwd "/etc/nginx"
+#    code <<-EOH
+#    sed -i 's/gzip_comp_level/#gzip_comp_level/' nginx.conf
+#    sed -i 's/gzip_http_version/#gzip_http_version/' nginx.conf
+#    sed -i 's/gzip_min_length/#gzip_min_length/' nginx.conf
+#    sed -i 's/gzip_types/#gzip_types/' nginx.conf
+#    sed -i 's/gzip_proxied/#gzip_proxied/' nginx.conf
+#    ln -s nginx /etc/nginx/conf.d/aegir.conf
+#    EOH
+#    notifies :restart, resources(:service => "nginx", :service => "php5-fpm")
+#end
