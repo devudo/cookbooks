@@ -21,7 +21,7 @@ git "#{node[:aegir][:dir]}/.drush/provision" do
   group "aegir"
 end
 
-# Devudo Provision
+# Devudo Provision for all servers
 git "#{node[:aegir][:dir]}/.drush/devudo_provision" do
     repository "git@github.com:devudo/devudo_provision.git"
     action :sync
