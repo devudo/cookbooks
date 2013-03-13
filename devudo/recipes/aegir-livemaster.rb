@@ -11,6 +11,8 @@ include_recipe "devudo::aegir-user"
 include_recipe "apt"
 include_recipe "php-fpm"
 include_recipe "nginx"
+include_recipe "mysql::server"
+
 server_fqdn = node.fqdn
 
 # Required php extensions
