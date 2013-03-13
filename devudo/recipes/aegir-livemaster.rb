@@ -37,7 +37,6 @@ end
 bash "Tweak nginx.conf file and symlink aegir in place" do
     cwd "/etc/nginx"
     code <<-EOH
-    sed -i 's/server_names_hash_bucket_size/#server_names_hash_bucket_size/' nginx.conf
     sed -i 's/gzip_comp_level/#gzip_comp_level/' nginx.conf
     sed -i 's/gzip_http_version/#gzip_http_version/' nginx.conf
     sed -i 's/gzip_min_length/#gzip_min_length/' nginx.conf
