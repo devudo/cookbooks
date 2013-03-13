@@ -28,8 +28,20 @@ git "#{node[:aegir][:dir]}/.drush/devudo_provision" do
     user "aegir"
 end
 
+# Runs only if already installed.  "aegir-install" should notify aegir-verify
+execute "aegir-verify" do
+  user "aegir"
+  group "aegir"
+  command 'drush @hostmaster provision-verify --yes'
+  environment ({'HOME' => "#{node[:aegir][:dir]}"})
+  cwd "#{node[:aegir][:dir]}"
+  only_if do
+    File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
+  end
+end
+
 # @TODO Make this its own recipe with just enough attributes for us.
-bash "Start the Aegir install process" do
+bash "aegir-install" do
   not_if do
     File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
   end
@@ -57,20 +69,13 @@ bash "Start the Aegir install process" do
   --yes
   -v
   EOH
+  notifies :run, "execute[aegir-verify]", :immediately
 end
 
 execute "Aegir: Save SSH key to a variable" do
   user "aegir"
   group "aegir"
   command 'drush @hostmaster vset devshop_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
-  environment ({'HOME' => "#{node[:aegir][:dir]}"})
-  cwd "#{node[:aegir][:dir]}"
-end
-
-execute "Aegir: verify hostmaster" do
-  user "aegir"
-  group "aegir"
-  command 'drush @hostmaster provision-verify --yes'
   environment ({'HOME' => "#{node[:aegir][:dir]}"})
   cwd "#{node[:aegir][:dir]}"
 end
