@@ -47,7 +47,11 @@ link "/etc/nginx/conf.d/aegir.conf" do
   notifies :restart, resources(:service => "nginx", :service => "php5-fpm")
 end
 
-
+# Grant access to this server from the devmaster_parent
+execute "devmaster-database-grant" do
+  command "\"#{node['mysql']['mysql_bin']}\" -u root #{node['mysql']['server_root_password'].empty? ? '' : '-p' }\"#{node['mysql']['server_root_password']}\" < \"GRANT ALL PRIVILEGES ON *.* TO root@#{node['devudo']['devmaster_parent_ip']} IDENTIFIED BY '#{node['mysql']['server_root_password']}' WITH GRANT OPTION; FLUSH PRIVILEGES;\""
+  action :nothing
+end
 # @TODO!!! Grant SQL Access to this livemaster's owner devmaster
 # GRANT ALL PRIVILEGES ON *.* TO root@aegir_server_IP IDENTIFIED BY 'some_pass' WITH GRANT OPTION; FLUSH PRIVILEGES;
 # GRANT ALL PRIVILEGES ON *.* TO root@166.78.3.181 IDENTIFIED BY 'l24866yB24l06NZNN591' WITH GRANT OPTION; FLUSH PRIVILEGES;
