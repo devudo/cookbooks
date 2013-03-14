@@ -8,7 +8,8 @@
 include_recipe "devudo::users"
 include_recipe "devudo::aegir-user"
 
-node.set['mysql']['bind_address'] = FALSE;
+node.set['mysql']['bind_address'] = ''
+node.set['nginx']['server_names_hash_bucket_size'] = ''  # THIS IS HANDLED IN AEGIR NGINX TEMPLATE
 
 include_recipe "apt"
 include_recipe "php-fpm"
@@ -46,23 +47,8 @@ link "/etc/nginx/conf.d/aegir.conf" do
   notifies :restart, resources(:service => "nginx", :service => "php5-fpm")
 end
 
-# @TODO: remove bind-address
-# @TODO: mysql_secure_installation
 
 # @TODO!!! Grant SQL Access to this livemaster's owner devmaster
 # GRANT ALL PRIVILEGES ON *.* TO root@aegir_server_IP IDENTIFIED BY 'some_pass' WITH GRANT OPTION; FLUSH PRIVILEGES;
 # GRANT ALL PRIVILEGES ON *.* TO root@166.78.3.181 IDENTIFIED BY 'l24866yB24l06NZNN591' WITH GRANT OPTION; FLUSH PRIVILEGES;
 
-
-#bash "Tweak nginx.conf file and symlink aegir in place" do
-#    cwd "/etc/nginx"
-#    code <<-EOH
-#    sed -i 's/gzip_comp_level/#gzip_comp_level/' nginx.conf
-#    sed -i 's/gzip_http_version/#gzip_http_version/' nginx.conf
-#    sed -i 's/gzip_min_length/#gzip_min_length/' nginx.conf
-#    sed -i 's/gzip_types/#gzip_types/' nginx.conf
-#    sed -i 's/gzip_proxied/#gzip_proxied/' nginx.conf
-#    ln -s nginx /etc/nginx/conf.d/aegir.conf
-#    EOH
-#    notifies :restart, resources(:service => "nginx", :service => "php5-fpm")
-#end
