@@ -1,3 +1,3 @@
 default[:aegir][:profile] = "devmaster"
-default[:aegir][:makefile] = "/var/aegir/.drush/devudo_provision/devmaster.make"
-default[:aegir][:hmaster_install_command] = "devmaster-install"
+default[:aegir][:makefile] = "#{node[:aegir][:dir]}/.drush/devudo_provision/build-devmaster.make"
+default[:aegir][:hostmaster_install_command] = "devmaster-install"
