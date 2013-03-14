@@ -1,12 +1,27 @@
 
-  include_recipe "runit"
+include_recipe "supervisor"
 
-  runit_service "hosting-queue-runner"
+# add the commandfile
+file node['aegir']['hosting_queue_runner_path'] do
+  owner "aegir"
+  group "aegir"
+  mode "0700"
+  action :create
+  content '#!/bin/bash
+/usr/share/drush/drush @hostmaster hosting-queue-runner'
+end
+template "#{node['supervisor']['dir']}/hosting_queue_runner.conf" do
+  source "hosting_queue_runner.conf.erb"
+  not_if {File.exists?("#{node['supervisor']['dir']}/hosting_queue_runner.conf")}
+end
 
-  service "hosting-queue-runner" do
-    supports :status => true, :restart => true, :reload => true
-    reload_command "#{node['runit']['sv_bin']} hup #{node['runit']['service_dir']}/nginx"
-  end
+  #
+  #runit_service "hosting-queue-runner"
+  #
+  #service "hosting-queue-runner" do
+  #  supports :status => true, :restart => true, :reload => true
+  #  reload_command "#{node['runit']['sv_bin']} hup #{node['runit']['service_dir']}/nginx"
+  #end
 
 #
 ## Common hosting tools
