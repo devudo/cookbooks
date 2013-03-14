@@ -57,9 +57,6 @@ cookbook_file "/etc/mysql/devmaster-database-grant.sql" do
   source "devmaster-database-grant.sql.erb"
   notifies :run, resources(:execute => "devmaster-database-grant"), :immediately
   not_if {File.exists?("/etc/mysql/devmaster-database-grant.sql")}
-  variables({
-    :x_men => "are keen"
-  })
 end
 
 
