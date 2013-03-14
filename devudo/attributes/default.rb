@@ -10,6 +10,7 @@ default[:aegir][:profile] = "hostmaster"
 default[:aegir][:makefile] = "/var/aegir/.drush/provision/aegir.make"
 default[:aegir][:hostmaster_install_command] = "hostmaster-install"
 
+default[:aegir][:hosting_queue_runner_path] = '/usr/local/bin/hosting-queue-runner'
 
 # System users to create on the target
 # Put the users authorized_keys as the value of this array
