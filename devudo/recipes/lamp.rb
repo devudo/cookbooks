@@ -24,6 +24,15 @@ execute "Enable mod_rewrite" do
   command "a2enmod rewrite"
 end
 
+# add our recursive git pull tweak.
+file "/usr/local/bin/git-pull-recursive" do
+  owner "root"
+  group "root"
+  mode "0755"
+  action :create
+  content 'find . -type d -name .git -exec sh -c "cd \"{}\"/../ && pwd && git pull" \;'
+end
+
 # Setup Drush
 git "Install Drush" do
   repository "http://git.drupal.org/project/drush.git"
