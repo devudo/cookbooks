@@ -28,6 +28,10 @@ git "#{node[:aegir][:dir]}/.drush/devudo_provision" do
     user "aegir"
 end
 
+# Hosting queue runner
+include_recipe "devudo::hosting-queue-runner"
+
+
 # Runs only if already installed.  "aegir-install" should notify aegir-verify
 execute "aegir-verify" do
   user "aegir"
