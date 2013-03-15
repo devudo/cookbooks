@@ -71,7 +71,7 @@ bash "aegir-install" do
   --makefile="#{node[:aegir][:makefile]}" \
   --working-copy \
   --yes \
-  -v \
+  -v 
   EOH
   notifies :run, "execute[aegir-verify]", :immediately
 end
