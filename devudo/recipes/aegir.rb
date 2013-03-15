@@ -66,8 +66,8 @@ bash "aegir-install" do
   --profile="#{node[:aegir][:profile]}" \
   --makefile="#{node[:aegir][:makefile]}" \
   --working-copy \
-  --yes
-  -v
+  --yes \
+  -v \
   EOH
   notifies :run, "execute[aegir-verify]", :immediately
 end
