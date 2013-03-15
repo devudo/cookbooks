@@ -1,6 +1,9 @@
 ####################
 # DEVUDO DEVMASTER #
 ####################
+node.set[:aegir][:profile] = "devmaster"
+node.set[:aegir][:makefile] = "#{node[:aegir][:dir]}/.drush/devudo_provision/build-devmaster.make"
+node.set[:aegir][:hostmaster_install_command] = "devmaster-install"
 
 aegir_root = node[:aegir][:dir]
 devmaster_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
@@ -9,6 +12,15 @@ log "[DEVUDO] Preparing devmaster instance at #{devmaster_root}"
 
 # First get Aegir (which also gets lamp and users)
 include_recipe "devudo::aegir"
+
+execute "Aegir: Save SSH key to a variable" do
+  user "aegir"
+  group "aegir"
+  command 'drush @hostmaster vset devshop_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
+  environment ({'HOME' => "#{node[:aegir][:dir]}"})
+  cwd "#{node[:aegir][:dir]}"
+end
+
 
 # This repo was originally created with the makefile by devmaster-install
 # Make sure the repo is up to date
