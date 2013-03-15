@@ -31,7 +31,7 @@ end
 # Hosting queue runner
 include_recipe "devudo::hosting-queue-runner"
 
-
+# @TODO: Find out why we need this.  we didn't used to...
 # Runs only if already installed.  "aegir-install" should notify aegir-verify
 execute "aegir-verify" do
   user "aegir"
@@ -74,12 +74,4 @@ bash "aegir-install" do
   -v 
   EOH
   notifies :run, "execute[aegir-verify]", :immediately
-end
-
-execute "Aegir: Save SSH key to a variable" do
-  user "aegir"
-  group "aegir"
-  command 'drush @hostmaster vset devshop_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
-  environment ({'HOME' => "#{node[:aegir][:dir]}"})
-  cwd "#{node[:aegir][:dir]}"
 end
