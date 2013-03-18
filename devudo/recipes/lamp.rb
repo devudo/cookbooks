@@ -4,6 +4,7 @@
 include_recipe "apt"
 include_recipe "mysql::server"
 include_recipe "devudo::mysql_secure_installation"
+include_recipe "php"
 include_recipe "drush"
 
 # Install required apt packages.
