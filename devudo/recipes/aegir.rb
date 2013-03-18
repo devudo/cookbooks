@@ -15,7 +15,7 @@ end
 # Get provision.
 drush "dl provision-6.x-1.9 --destination=#{node[:aegir][:dir]}/.drush" do
   not_if do
-    File.exists?("#{node[:drush][:install_dir]}/commands/provision")
+    File.exists?("#{node[:aegir][:dir]}/.drush/provision")
   end
 end
 
@@ -33,7 +33,8 @@ include_recipe "devudo::hosting-queue-runner"
 # @TODO: Find out why we need this.  we didn't used to...
 # It is probably because of devmaster-install
 # Runs only if already installed.  "aegir-install" should notify aegir-verify
-drush "@hostmaster provision-verify" do
+drush "aegir-verify" do
+  command "@hostmaster provision-verify"
   only_if do
     File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
   end
@@ -68,5 +69,5 @@ bash "aegir-install" do
   --yes \
   -v 
   EOH
-  notifies :run, "execute[aegir-verify]", :immediately
+  notifies :run, "drush[aegir-verify]", :immediately
 end
