@@ -9,7 +9,7 @@ include_recipe "drush"
 
 # Install required apt packages.
 # @TODO: Make these a default attribute
-%w{ apache2 php5 php5-cli php5-gd php5-mysql php-pear php5-curl postfix sudo rsync git-core unzip vim }.each do |package_name|
+%w{ apache2 php5 php5-cli php5-gd php5-mysql php-pear php5-curl libapache2-mod-php5 postfix sudo rsync git-core unzip vim }.each do |package_name|
   package package_name
 end
 
