@@ -11,6 +11,13 @@ default[:aegir][:makefile] = "/var/aegir/.drush/provision/aegir.make"
 default[:aegir][:hostmaster_install_command] = "hostmaster-install"
 
 default[:aegir][:hosting_queue_runner_path] = '/usr/local/bin/hosting-queue-runner'
+default[:aegir][:hosting_queue_runit_path] = '/etc/hosting-queue'
+
+default['drush']['install_method'] = "wget"
+default['drush']['install_dir'] = "/usr/share/drush"
+default['drush']['command_path'] = "/usr/local/bin/drush"
+default['drush']['version'] = "7.x-4.6"
+
 
 # System users to create on the target
 # Put the users authorized_keys as the value of this array

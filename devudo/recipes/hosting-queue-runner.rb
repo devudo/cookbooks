@@ -1,20 +1,38 @@
 
-runit_service "hosting-queue" do
-  default_logger true
-end
+include_recipe "apt"
+include_recipe "drush"
+
+
 
 #
-#include_recipe "supervisor"
+#
+#
+## add the commandfile
+#directory "/etc/service/hosting-queue" do
+#  owner "root"
+#  group "root"
+#  action :create
+#  recursive true
+#end
+#
+#
+## add the commandfile
+##file "#{node['aegir']['hosting_queue_runner_path']}/runit" do
+#file "/etc/service/hosting-queue/runit" do
+#  owner "aegir"
+#  group "aegir"
+#  mode "0700"
+#  action :create
+#  content '#!/bin/bash
+#/usr/share/drush/drush @hostmaster hosting-queue-runner'
+#end
 
-# add the commandfile
-file node['aegir']['hosting_queue_runner_path'] do
-  owner "aegir"
-  group "aegir"
-  mode "0700"
-  action :create
-  content '#!/bin/bash
-/usr/share/drush/drush @hostmaster hosting-queue-runner'
-end
+
+#include_recipe "runit"
+#
+#runit_service "hosting-queue"
+#
+#include_recipe "supervisor"
 
 
 #template "#{node['supervisor']['dir']}/hosting_queue_runner.conf" do

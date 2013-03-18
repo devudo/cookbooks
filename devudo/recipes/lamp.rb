@@ -4,6 +4,7 @@
 include_recipe "apt"
 include_recipe "mysql::server"
 include_recipe "devudo::mysql_secure_installation"
+include_recipe "drush"
 
 # Install required apt packages.
 # @TODO: Make these a default attribute
@@ -31,19 +32,4 @@ file "/usr/local/bin/git-pull-recursive" do
   mode "0755"
   action :create
   content 'find . -type d -name .git -exec sh -c "cd \"{}\"/../ && pwd && git pull" \;'
-end
-
-# Setup Drush
-git "Install Drush" do
-  repository "http://git.drupal.org/project/drush.git"
-  reference "7.x-4.6"
-  action :sync
-  destination "/usr/share/drush"
-end
-link "/usr/local/bin/drush" do
-  to "/usr/share/drush/drush"
-end
-execute "Run Drush to ensure it works." do
-  only_if "drush"
-  command "sudo drush"
 end
