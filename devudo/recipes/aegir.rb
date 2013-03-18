@@ -18,13 +18,6 @@ drush "dl provision-6.x-1.9 --destination=#{node[:aegir][:dir]}/.drush" do
     File.exists?("#{node[:drush][:install_dir]}/commands/provision")
   end
 end
-#git "#{node[:aegir][:dir]}/.drush/provision" do
-#  repository "http://git.drupal.org/project/provision.git"
-#  reference "6.x-1.9"
-#  action :export
-#  user "aegir"
-#  group "aegir"
-#end
 
 # Devudo Provision for all servers
 git "#{node[:aegir][:dir]}/.drush/devudo_provision" do
@@ -35,14 +28,14 @@ end
 
 # Hosting queue runner
 include_recipe "devudo::hosting-queue-runner"
-
-# @TODO: Find out why we need this.  we didn't used to...
-# Runs only if already installed.  "aegir-install" should notify aegir-verify
-drush "@hostmaster provision-verify" do
-  only_if do
-    File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
-  end
-end
+#
+## @TODO: Find out why we need this.  we didn't used to...
+## Runs only if already installed.  "aegir-install" should notify aegir-verify
+#drush "@hostmaster provision-verify" do
+#  only_if do
+#    File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
+#  end
+#end
 
 # @TODO Make this its own recipe with just enough attributes for us.
 bash "aegir-install" do
