@@ -13,7 +13,7 @@ link "/etc/apache2/conf.d/aegir.conf" do
 end
 
 # Get provision.
-drush "dl provision-6.x-1.9" do
+drush "dl provision-6.x-1.9 --destination=#{node[:aegir][:dir]}/.drush" do
   not_if do
     File.exists?("#{node[:drush][:install_dir]}/commands/provision")
   end
