@@ -13,13 +13,18 @@ link "/etc/apache2/conf.d/aegir.conf" do
 end
 
 # Get provision.
-git "#{node[:aegir][:dir]}/.drush/provision" do
-  repository "http://git.drupal.org/project/provision.git"
-  reference "6.x-1.9"
-  action :export
-  user "aegir"
-  group "aegir"
+drush "dl provision-6.x-1.9" do
+  not_if do
+    File.exists?("#{node[:drush][:install_dir]}/commands/provision")
+  end
 end
+#git "#{node[:aegir][:dir]}/.drush/provision" do
+#  repository "http://git.drupal.org/project/provision.git"
+#  reference "6.x-1.9"
+#  action :export
+#  user "aegir"
+#  group "aegir"
+#end
 
 # Devudo Provision for all servers
 git "#{node[:aegir][:dir]}/.drush/devudo_provision" do
@@ -33,12 +38,7 @@ include_recipe "devudo::hosting-queue-runner"
 
 # @TODO: Find out why we need this.  we didn't used to...
 # Runs only if already installed.  "aegir-install" should notify aegir-verify
-execute "aegir-verify" do
-  user "aegir"
-  group "aegir"
-  command 'drush @hostmaster provision-verify --yes'
-  environment ({'HOME' => "#{node[:aegir][:dir]}"})
-  cwd "#{node[:aegir][:dir]}"
+drush "@hostmaster provision-verify" do
   only_if do
     File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
   end
@@ -73,5 +73,5 @@ bash "aegir-install" do
   --yes \
   -v 
   EOH
-  notifies :run, "execute[aegir-verify]", :immediately
+  #notifies :run, "execute[aegir-verify]", :immediately
 end
