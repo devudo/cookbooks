@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-# Options: pear, git
+# Options: pear, git, wget
 default['drush']['install_method'] = "pear"
 
 # Used for drush install via git and make install (PEAR stores here by default).
