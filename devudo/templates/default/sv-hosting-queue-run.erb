@@ -1,3 +1,3 @@
 #!/bin/sh
 exec 2>&1
-exec /usr/bin/env drush @hostmaster hosting-queue-runner
+exec /usr/bin/env su - aegir -c 'drush @hostmaster hosting-queue-runner'
