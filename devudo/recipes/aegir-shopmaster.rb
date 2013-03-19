@@ -10,6 +10,13 @@ node.set[:aegir][:profile] = "shopmaster"
 node.set[:aegir][:makefile] = "#{node[:aegir][:dir]}/.drush/devudo_provision/build-shopmaster.make"
 node.set[:aegir][:hostmaster_install_command] = "devmaster-install"
 
+
+aegir_root = node[:aegir][:dir]
+shopmaster_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
+
+# First get Aegir (which also gets lamp and users)
+include_recipe "devudo::aegir"
+
 # don't forget our shop_provision
 git "#{node[:aegir][:dir]}/.drush/shop_provision" do
   repository "git@github.com:devudo/shop_provision.git"
@@ -19,13 +26,6 @@ git "#{node[:aegir][:dir]}/.drush/shop_provision" do
   user "aegir"
   group "aegir"
 end
-
-
-aegir_root = node[:aegir][:dir]
-shopmaster_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
-
-# First get Aegir (which also gets lamp and users)
-include_recipe "devudo::aegir"
 
 
 # @TODO: How to update all working-copy git repos

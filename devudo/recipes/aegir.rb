@@ -28,15 +28,6 @@ end
 
 
 
-# @TODO: Find out why we need this.  we didn't used to...
-# It is probably because of devmaster-install
-# Runs only if already installed.  "aegir-install" should notify aegir-verify
-drush "@hostmaster provision-verify" do
-  only_if do
-    File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
-  end
-  action :nothing
-end
 
 # @TODO Make this its own recipe with just enough attributes for us.
 bash "aegir-install" do
@@ -67,6 +58,15 @@ bash "aegir-install" do
   -v 
   EOH
   notifies :run, "drush[@hostmaster provision-verify]", :immediately
+end
+
+# @TODO: Find out why we need this.  we didn't used to...
+# It is probably because of devmaster-install
+# Runs only if already installed.  "aegir-install" should notify aegir-verify
+drush "@hostmaster provision-verify" do
+  only_if do
+    File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
+  end
 end
 
 # Hosting queue runner
