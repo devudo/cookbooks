@@ -11,3 +11,5 @@ end
 include_recipe "runit"
 runit_service "hosting-queue"
 
+# Get provision.
+drush "@hostmaster en hosting_queue_runner"
