@@ -26,15 +26,12 @@ git "#{node[:aegir][:dir]}/.drush/devudo_provision" do
     user "aegir"
 end
 
-# Hosting queue runner
-include_recipe "devudo::hosting-queue-runner"
 
 
 # @TODO: Find out why we need this.  we didn't used to...
 # It is probably because of devmaster-install
 # Runs only if already installed.  "aegir-install" should notify aegir-verify
-drush "aegir-verify" do
-  command "@hostmaster provision-verify"
+drush "@hostmaster provision-verify" do
   only_if do
     File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
   end
@@ -69,5 +66,8 @@ bash "aegir-install" do
   --yes \
   -v 
   EOH
-  notifies :run, "drush[aegir-verify]", :immediately
+  notifies :run, "drush[@hostmaster provision-verify]", :immediately
 end
+
+# Hosting queue runner
+include_recipe "devudo::hosting-queue-runner"
