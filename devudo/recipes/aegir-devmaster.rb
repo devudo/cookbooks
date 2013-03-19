@@ -24,6 +24,9 @@ end
 
 # This repo was originally created with the makefile by devmaster-install
 # Make sure the repo is up to date
+# @TODO! This is failing to init submodules, because the folder is actually
+# created in aegir recipe using devmaster-install... Actually I think it is
+# because I removed --working-copy from devmaster install
 git devmaster_root do
   repository "git@github.com:devudo/devmaster.git"
   reference "6.x-1.x"
