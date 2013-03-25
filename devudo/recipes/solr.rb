@@ -23,7 +23,7 @@ git "#{node[:aegir][:dir]}/.drush/provision_solr" do
   user "aegir"
   group "aegir"
 end
-git "#{devmaster_root}/sites/all/modules/hosting_solr" do
+git "#{devmaster_root}/sites/all/modules/contrib/hosting_solr" do
   repository "http://git.drupal.org/project/hosting_solr.git"
   reference "6.x-1.x"
   action :sync
@@ -31,6 +31,8 @@ git "#{devmaster_root}/sites/all/modules/hosting_solr" do
   group "aegir"
 end
 
+drush "@hostmaster en hosting_solr"
+  
 # configuring tomcat
 #template "/var/lib/tomcat7/conf/Catalina/localhost/solr.xml" do
 #    source "tomcat_solr.xml.erb"
