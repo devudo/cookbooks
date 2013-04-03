@@ -1,16 +1,28 @@
 #
 # Jacked from http://community.opscode.com/cookbooks/tomcat-solr
 #
-package "tomcat7" do
-    action :install
+%w{ tomcat6 tomcat6-admin tomcat6-common tomcat6-user }.each do |package_name|
+  package package_name
 end
 
-cookbook_file "/var/lib/tomcat7/webapps/solr.war" do
+cookbook_file "/var/lib/tomcat6/webapps/solr.war" do
     source "solr.war"
     owner "root"
     group "root"
     mode "0644"
 end
+
+group "aegir" do
+  action :modify
+  members "tomcat6"
+  append true
+end
+group "tomcat6" do
+  action :modify
+  members "aegir"
+  append true
+end
+
 
 # Symlink to aegir config
 devmaster_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
