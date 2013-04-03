@@ -54,6 +54,7 @@ bash "aegir-install" do
   --web_group="www-data" \
   --profile="#{node[:aegir][:profile]}" \
   --makefile="#{node[:aegir][:makefile]}" \
+  --working_copy=#{node[:aegir][:working_copy]} \
   --yes \
   -v 
   EOH
