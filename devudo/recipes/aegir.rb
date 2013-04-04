@@ -60,9 +60,13 @@ bash "aegir-install" do
   EOH
 end
 
+bash "aegir-update" do
+  cwd "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
+  code "git-pull-recursive"
+end
+
 # @TODO: Find out why we need this.  we didn't used to...
 # It is probably because of devmaster-install
-# Runs only if already installed.  "aegir-install" should notify aegir-verify
 drush "@hostmaster provision-verify"
 
 # Hosting queue runner
