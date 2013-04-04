@@ -5,7 +5,6 @@
 # sales.devudo.com is simply another aegir instance, but with super-powers.
 # This server will fire up other servers with deployed devmaster instances.
 
-
 node.set[:aegir][:profile] = "shopmaster"
 node.set[:aegir][:makefile] = "#{node[:aegir][:dir]}/.drush/devudo_provision/build-shopmaster.make"
 node.set[:aegir][:hostmaster_install_command] = "devmaster-install"
@@ -17,15 +16,22 @@ shopmaster_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir
 # First get Aegir (which also gets lamp and users)
 include_recipe "devudo::aegir"
 
-# don't forget our shop_provision
-git "#{node[:aegir][:dir]}/.drush/shop_provision" do
-  repository "git@github.com:devudo/shop_provision.git"
-  reference "master"
-  action :sync
-  enable_submodules true
-  user "aegir"
-  group "aegir"
+# Link up shop_provision
+link "#{node[:aegir][:dir]}/.drush/shop_provision" do
+  to "#{shopmaster_root}/profiles/shopmaster/drush/shop_provision"
 end
+
+
+#
+## don't forget our shop_provision
+#git "#{node[:aegir][:dir]}/.drush/shop_provision" do
+#  repository "git@github.com:devudo/shop_provision.git"
+#  reference "master"
+#  action :sync
+#  enable_submodules true
+#  user "aegir"
+#  group "aegir"
+#end
 
 
 # @TODO: How to update all working-copy git repos
