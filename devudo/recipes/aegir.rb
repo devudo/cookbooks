@@ -62,6 +62,9 @@ end
 
 bash "aegir-update" do
   cwd "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
+  user "aegir"
+  group "aegir"
+  environment ({'HOME' => "#{node[:aegir][:dir]}"})
   code "git-pull-recursive"
 end
 
