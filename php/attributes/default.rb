@@ -91,3 +91,10 @@ default['php']['configure_options'] = %W{--prefix=#{php['prefix_dir']}
                                           --with-sqlite3
                                           --with-pdo-mysql
                                           --with-pdo-sqlite}
+
+
+
+
+default['php']['tuneable']['memory_limit'] = '256M'
+default['php']['tuneable']['upload_max_filesize'] = '12M'
+default['php']['tuneable']['post_max_size'] = '1M'
