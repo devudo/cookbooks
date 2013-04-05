@@ -20,6 +20,9 @@ default['drush']['command_path'] = "/usr/local/bin/drush"
 default['drush']['version'] = "7.x-4.6"
 
 
+default['php']['conf_dir']      = '/etc/php5/apache2'
+
+
 # System users to create on the target
 # Put the users authorized_keys as the value of this array
 default[:devudo][:users] = {
