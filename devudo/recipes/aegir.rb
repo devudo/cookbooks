@@ -30,15 +30,12 @@ end
 
 
 # @TODO Make this its own recipe with just enough attributes for us.
-bash "aegir-install" do
-  not_if do
-    File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
-  end
-  user "aegir"
-  group "aegir"
-  environment ({'HOME' => "#{node[:aegir][:dir]}"})
-  cwd "#{node[:aegir][:dir]}"
-  code <<-EOH
+# @TODO: Actually check if @hostmaster is installed.
+
+# @TODO: Find out why we always end up on the Install page on first run!
+#   devmaster-install should verify itself...
+# THIS WORKS when done manually from the command line.
+aegir_install_command = <<-EOH
   drush #{node[:aegir][:hostmaster_install_command]} #{node[:aegir][:frontend]} \
   --site="#{node[:aegir][:frontend]}" \
   --aegir_host="#{node[:aegir][:fqdn]}" \
@@ -55,22 +52,29 @@ bash "aegir-install" do
   --profile="#{node[:aegir][:profile]}" \
   --makefile="#{node[:aegir][:makefile]}" \
   --working_copy=#{node[:aegir][:working_copy]} \
-  --yes \
-  -v 
+  --yes 
   EOH
+  
+log aegir_install_command
+
+bash "aegir-install" do
+  not_if do
+    File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
+  end
+  user "aegir"
+  group "aegir"
+  environment 'HOME' => "#{node[:aegir][:dir]}"
+  cwd "#{node[:aegir][:dir]}"
+  code aegir_install_command
 end
 
 bash "aegir-update" do
   cwd "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
   user "aegir"
   group "aegir"
-  environment ({'HOME' => "#{node[:aegir][:dir]}"})
+  environment 'HOME' => "#{node[:aegir][:dir]}"
   code "git-pull-recursive"
 end
-
-# @TODO: Find out why we need this.  we didn't used to...
-# It is probably because of devmaster-install
-drush "@hostmaster provision-verify"
 
 # Hosting queue runner
 include_recipe "devudo::hosting-queue-runner"
