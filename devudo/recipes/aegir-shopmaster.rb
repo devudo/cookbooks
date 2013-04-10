@@ -19,3 +19,7 @@ include_recipe "devudo::aegir"
 link "#{node[:aegir][:dir]}/.drush/shop_provision" do
   to "#{shopmaster_root}/profiles/shopmaster/drush/shop_provision"
 end
+
+
+# Setup the knife-rackspace command
+include_recipe "devudo::knife-rackspace"
