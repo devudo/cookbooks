@@ -22,6 +22,7 @@ end
 # Enable mod_rewrite
 execute "Enable mod_rewrite" do
   command "a2enmod rewrite"
+  notifies :restart, "service[apache2]", :immediately
 end
 
 # PHP must be included after apache is available, because
