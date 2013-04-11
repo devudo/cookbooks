@@ -19,6 +19,15 @@ default['drush']['install_dir'] = "/usr/share/drush"
 default['drush']['command_path'] = "/usr/local/bin/drush"
 default['drush']['version'] = "7.x-4.6"
 
+# SHOPMASTER ONLY
+default[:knife][:node_name] = node['fqdn']
+default[:knife][:chef_server_url] = 'http://chief.devudo.com:4000'
+
+# RACKSPACE
+default[:rackspace][:rackspace_api_key] = 'e93596076f1a3bd404d6a8b790b8a96b'
+default[:rackspace][:rackspace_api_username] = 'careernerd'
+default[:rackspace][:rackspace_version] = 'v2'
+
 
 default['php']['conf_dir']      = '/etc/php5/apache2'
 
