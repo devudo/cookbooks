@@ -1,5 +1,6 @@
 
 include_recipe "apt"
+include_recipe "devudo::aegir-user"
 
 
 # knife rackspace server create
@@ -31,3 +32,20 @@ gem_package "knife-rackspace" do
   options("--no-rdoc --no-ri")
 end
 
+# Prepare to make a chef client.
+directory "/etc/chef" do
+  action :create
+  recursive true
+end
+directory "#{node[:aegir][:dir]}/.chef/" do
+  action :create
+  recursive true
+  owner "aegir"
+  group "aegir"
+end
+template "#{node[:aegir][:dir]}/.chef/knife.rb" do
+    source "knife.rb.erb"
+    owner "aegir"
+    group "aegir"
+    mode "0664"
+end
