@@ -1,0 +1,15 @@
+
+log_level                :info
+log_location             STDOUT
+node_name                '<%= node[:knife][:node_name] %>'
+client_key               '<%= node[:aegir][:dir] %>/.chef/<%= node[:knife][:node_name] %>.pem'
+validation_client_name   'chef-validator'
+validation_key           '/etc/chef/validation.pem'
+chef_server_url          '<%= node[:knife][:chef_server_url] %>'
+cache_type               'BasicFile'
+cache_options( :path => '<%= node[:aegir][:dir] %>/.chef/checksums' )
+
+# Rackspace:
+knife[:rackspace_api_key]      = "<%= node[:rackspace][:rackspace_api_key] %>"
+knife[:rackspace_api_username] = "<%= node[:rackspace][:rackspace_api_username] %>"
+knife[:rackspace_version] = '<%= node[:rackspace][:rackspace_version] %>'
