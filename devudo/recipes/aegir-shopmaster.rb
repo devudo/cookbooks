@@ -20,6 +20,12 @@ link "#{node[:aegir][:dir]}/.drush/shop_provision" do
   to "#{shopmaster_root}/profiles/shopmaster/drush/shop_provision"
 end
 
-
+execute "Aegir: Save SSH key to a variable" do
+  user "aegir"
+  group "aegir"
+  command 'drush @hostmaster vset shopmaster_ssh_public_key "$(cat ~/.ssh/id_rsa.pub)" --yes'
+  environment ({'HOME' => "#{node[:aegir][:dir]}"})
+  cwd "#{node[:aegir][:dir]}"
+end
 # Setup the knife-rackspace command
 include_recipe "devudo::knife-rackspace"
