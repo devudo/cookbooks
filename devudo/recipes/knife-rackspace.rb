@@ -43,6 +43,10 @@ directory "#{node[:aegir][:dir]}/.chef/" do
   owner "aegir"
   group "aegir"
 end
+cookbook_file "/etc/chef/validation.pem" do
+    source "validation.pem"
+    mode "0664"
+end
 template "#{node[:aegir][:dir]}/.chef/knife.rb" do
     source "knife.rb.erb"
     owner "aegir"
