@@ -20,7 +20,10 @@ default['drush']['command_path'] = "/usr/local/bin/drush"
 default['drush']['version'] = "7.x-4.6"
 
 # SHOPMASTER ONLY
-default[:knife][:node_name] = node['fqdn']
+#
+#   Have the CTO create a new admin chef client for your server.
+#
+default[:knife][:node_name] = "#{node['fqdn']}.admin"
 default[:knife][:chef_server_url] = 'http://198.61.196.221:4000'
 
 # RACKSPACE
