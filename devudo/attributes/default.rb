@@ -21,7 +21,7 @@ default['drush']['version'] = "7.x-4.6"
 
 # SHOPMASTER ONLY
 default[:knife][:node_name] = node['fqdn']
-default[:knife][:chef_server_url] = 'http://chief.devudo.com:4000'
+default[:knife][:chef_server_url] = 'http://198.61.196.221:4000'
 
 # RACKSPACE
 default[:rackspace][:rackspace_api_key] = 'e93596076f1a3bd404d6a8b790b8a96b'
