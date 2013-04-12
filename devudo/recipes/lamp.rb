@@ -2,6 +2,7 @@
 # Base LAMPd development server
 #
 include_recipe "apt"
+include_recipe "newrelic"
 include_recipe "mysql::server"
 include_recipe "devudo::mysql_secure_installation"
 
