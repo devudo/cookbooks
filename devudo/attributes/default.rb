@@ -8,7 +8,6 @@ default[:aegir][:dir] = "/var/aegir"
 default[:aegir][:db_host] = "localhost"
 default[:aegir][:profile] = "hostmaster"
 default[:aegir][:makefile] = "/var/aegir/.drush/provision/aegir.make"
-default[:aegir][:working_copy] = "1"
 default[:aegir][:hostmaster_install_command] = "hostmaster-install"
 
 default[:aegir][:hosting_queue_runner_path] = '/usr/local/bin/hosting-queue-runner'
