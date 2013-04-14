@@ -53,3 +53,11 @@ template "#{node[:aegir][:dir]}/.chef/knife.rb" do
     group "aegir"
     mode "0664"
 end
+
+file "/etc/chef/#{node[:fqdn]}.admin.pem" do
+  content ""
+  mode "0600"
+  owner "aegir"
+  group "aegir"
+  action :create
+end
