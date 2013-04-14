@@ -2,9 +2,16 @@
 # Base LAMPd development server
 #
 include_recipe "apt"
-include_recipe "newrelic"
 include_recipe "mysql::server"
 include_recipe "devudo::mysql_secure_installation"
+
+# If we have keys, install newrelic
+if node['newrelic']['server_monitoring']['license'] != ""
+  include_recipe "newrelic"
+end
+if node['newrelic']['application_monitoring']['license'] != ""
+  include_recipe "newrelic"
+end
 
 # Install required apt packages.
 # @TODO: Make these a default attribute
@@ -29,7 +36,7 @@ end
 # PHP must be included after apache is available, because
 # the /etc/php5/apache2 folder doesn't exist yet.
 package "libapache2-mod-php5"
-include_recipe "php"
+include_recipe "php-#{node[:php][:version]}"
 include_recipe "drush"
 
 # additional php packages
