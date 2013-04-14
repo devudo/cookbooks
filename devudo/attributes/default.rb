@@ -18,6 +18,11 @@ default['drush']['install_dir'] = "/usr/share/drush"
 default['drush']['command_path'] = "/usr/local/bin/drush"
 default['drush']['version'] = "7.x-4.6"
 
+# Making these blank by default so we can check for them
+default['newrelic']['server_monitoring']['license'] = ""
+default['newrelic']['application_monitoring']['license'] = ""
+
+
 # SHOPMASTER ONLY
 #
 #   Have the CTO create a new admin chef client for your server.
@@ -30,7 +35,9 @@ default[:rackspace][:rackspace_api_key] = 'e93596076f1a3bd404d6a8b790b8a96b'
 default[:rackspace][:rackspace_api_username] = 'careernerd'
 default[:rackspace][:rackspace_version] = 'v2'
 
-
+# 5.4 or 5.4 ONLY... for now... it has to have a matching recipe,
+# like recipe[devudo::php-5.4]
+default['php']['version'] = '5.4'
 default['php']['conf_dir']      = '/etc/php5/apache2'
 
 default['mysql']['tunable']['max_allowed_packet']   = "64M"
