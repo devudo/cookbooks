@@ -33,10 +33,13 @@ execute "Enable mod_rewrite" do
   notifies :restart, "service[apache2]", :immediately
 end
 
+package "libapache2-mod-php5"
+
 # PHP must be included after apache is available, because
 # the /etc/php5/apache2 folder doesn't exist yet.
-package "libapache2-mod-php5"
-include_recipe "php-#{node[:php][:version]}"
+# We are doing a little magic to get our desired version of php installed...
+# do not forget to add the version number to attributes.
+include_recipe "devudo::php-#{node[:php][:version]}"
 include_recipe "drush"
 
 # additional php packages
