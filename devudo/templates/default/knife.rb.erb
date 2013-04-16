@@ -1,8 +1,10 @@
 
+## THIS FILE IS OVERWRITTEN BY CHEF.  DO NOT MAKE ANY CHANGES TO THIS FILE
+
 log_level                :info
 log_location             STDOUT
-node_name                '<%= node[:knife][:node_name] %>'
-client_key               '<%= node[:aegir][:dir] %>/.chef/<%= node[:knife][:node_name] %>.pem'
+node_name                '<%= node[:node][:fqdn] %>'
+client_key               '<%= node[:aegir][:dir] %>/.chef/<%= node[:node][:fqdn] %>.admin.pem'
 validation_client_name   'chef-validator'
 validation_key           '/etc/chef/validation.pem'
 chef_server_url          '<%= node[:knife][:chef_server_url] %>'
