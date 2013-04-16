@@ -1,6 +1,6 @@
 
-include_recipe "apt"
-include_recipe "devudo::aegir-user"
+#include_recipe "apt"
+#include_recipe "devudo::aegir-user"
 
 
 # knife rackspace server create
@@ -54,10 +54,10 @@ template "#{node[:aegir][:dir]}/.chef/knife.rb" do
     mode "0664"
 end
 
-file "/etc/chef/#{node[:fqdn]}.admin.pem" do
-  content ""
+file "/#{node[:aegir][:dir]}/.chef/#{node[:fqdn]}.admin.pem" do
+  content "INSERT PRIVATE KEY HERE"
   mode "0600"
   owner "aegir"
   group "aegir"
-  action :create
+  action :create_if_missing
 end
