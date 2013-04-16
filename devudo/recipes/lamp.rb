@@ -39,6 +39,13 @@ package "libapache2-mod-php5"
 # the /etc/php5/apache2 folder doesn't exist yet.
 # We are doing a little magic to get our desired version of php installed...
 # do not forget to add the version number to attributes.
+
+# If not 5.4 force to 5.3...  php::default has 5.3.10 for some reason.
+# @TODO: figure out why my attributes from default.rb don't override php recipe.
+if node[:php][:version] != "5.4"
+  node.set[:php][:version] = "5.3"
+end
+
 include_recipe "devudo::php-#{node[:php][:version]}"
 include_recipe "drush"
 
