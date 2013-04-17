@@ -1,33 +1,61 @@
 #
 # Jacked from http://community.opscode.com/cookbooks/tomcat-solr
 #
-%w{ tomcat6 tomcat6-admin tomcat6-common tomcat6-user }.each do |package_name|
-  package package_name
+
+# Install tomcat7
+package "tomcat7" do
+  action :install
 end
 
-cookbook_file "/var/lib/tomcat6/webapps/solr.war" do
-    source "solr.war"
-    owner "root"
-    group "root"
-    mode "0644"
+# Add solr war to tomcat webapps
+cookbook_file "/usr/share/solr-3.6.2.war" do
+  source "solr-3.6.2.war"
+  owner "root"
+  group "root"
+  mode "0644"
+  #      notifies :restart, resources(:service => "tomcat7") 
 end
 
+# Add tomcat7 user to aegir group (it needs to write the data folder)
 group "aegir" do
   action :modify
   members "tomcat6"
   append true
 end
-group "tomcat6" do
-  action :modify
-  members "aegir"
-  append true
+
+# Remove Catalina/localhost and symlink to aegir config folder
+execute "rm -rf /var/lib/tomcat7/conf/Catalina/localhost" do
+  action :run
+  notifies :create, 'link[/var/lib/tomcat7/conf/Catalina/localhost]', :immediately
+end
+link "/var/lib/tomcat7/conf/Catalina/localhost" do
+  to "#{node[:aegir][:dir]}/config/tomcat"
+  action :nothing
 end
 
+# ~/config/tomcat will symlink to ~/config/server_NAME/tomcat,
+# just like ~/config/apache symlinks to ~/config/server_NAME/apache
+# This is when running provision-verify on a server, so it is handled
+# in provision_solr, NOT HERE!
 
-# Symlink to aegir config
+#
+# AEGIR setup
+#
+#group "aegir" do
+#  action :modify
+#  members "tomcat6"
+#  append true
+#end
+#group "tomcat6" do
+#  action :modify
+#  members "aegir"
+#  append true
+#end
+
+# Get hosting and provision solr mods
+node.set[:aegir][:profile] = 'devmaster'
 devmaster_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
 
-# Aegir Solr
 git "#{node[:aegir][:dir]}/.drush/provision_solr" do
   repository "http://git.drupal.org/project/provision_solr.git"
   reference "6.x-1.x"
@@ -35,7 +63,7 @@ git "#{node[:aegir][:dir]}/.drush/provision_solr" do
   user "aegir"
   group "aegir"
 end
-git "#{devmaster_root}/sites/all/modules/contrib/hosting_solr" do
+git "#{devmaster_root}/sites/all/modules/hosting_solr" do
   repository "http://git.drupal.org/project/hosting_solr.git"
   reference "6.x-1.x"
   action :sync
@@ -43,7 +71,7 @@ git "#{devmaster_root}/sites/all/modules/contrib/hosting_solr" do
   group "aegir"
 end
 
-drush "@hostmaster en hosting_solr"
+# drush "@hostmaster en hosting_solr"
   
 # configuring tomcat
 #template "/var/lib/tomcat7/conf/Catalina/localhost/solr.xml" do
