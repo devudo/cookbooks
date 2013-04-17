@@ -13,6 +13,9 @@ log "[DEVUDO] Preparing devmaster instance at #{devmaster_root}"
 # First get Aegir (which also gets lamp and users)
 include_recipe "devudo::aegir"
 
+# Let's give everyone solr.
+include_recipe "devudo::solr"
+
 execute "Aegir: Save SSH key to a variable" do
   user "aegir"
   group "aegir"

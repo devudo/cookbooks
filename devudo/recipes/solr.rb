@@ -1,6 +1,10 @@
 #
-# Jacked from http://community.opscode.com/cookbooks/tomcat-solr
+# Borrowed from http://community.opscode.com/cookbooks/tomcat-solr
 #
+# The way provision_solr works is by using the "Multiple Web Apps"
+# method for SolrTomcat:
+
+# @see http://wiki.apache.org/solr/SolrTomcat#Multiple_Solr_Webapps
 
 # Install tomcat7
 package "tomcat7" do
@@ -16,12 +20,6 @@ cookbook_file "/usr/share/solr-3.6.2.war" do
   #      notifies :restart, resources(:service => "tomcat7") 
 end
 
-# Add tomcat7 user to aegir group (it needs to write the data folder)
-group "aegir" do
-  action :modify
-  members "tomcat6"
-  append true
-end
 
 # Remove Catalina/localhost and symlink to aegir config folder
 execute "rm -rf /var/lib/tomcat7/conf/Catalina/localhost" do
@@ -41,16 +39,13 @@ end
 #
 # AEGIR setup
 #
-#group "aegir" do
-#  action :modify
-#  members "tomcat6"
-#  append true
-#end
-#group "tomcat6" do
-#  action :modify
-#  members "aegir"
-#  append true
-#end
+
+# Add tomcat7 user to aegir group (it needs to write the data folder)
+group "aegir" do
+  action :modify
+  members "tomcat7"
+  append true
+end
 
 # Get hosting and provision solr mods
 devmaster_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
@@ -68,7 +63,7 @@ git "#{devmaster_root}/sites/all/modules/hosting_solr" do
   action :sync
   user "aegir"
   group "aegir"
-  notifies :run, "drush[@hostmaster en hosting_solr]", :immediately
+  notifies :run, "drush[@hostmaster en hosting_solr -y]", :immediately
 end
 
 drush "@hostmaster en hosting_solr -y" do
