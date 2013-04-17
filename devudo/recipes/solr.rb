@@ -71,7 +71,7 @@ git "#{devmaster_root}/sites/all/modules/hosting_solr" do
   notifies :run, "drush[@hostmaster en hosting_solr]", :immediately
 end
 
-drush "@hostmaster en hosting_solr" do
+drush "@hostmaster en hosting_solr -y" do
   action :nothing
 end
   
