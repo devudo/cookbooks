@@ -53,7 +53,6 @@ end
 #end
 
 # Get hosting and provision solr mods
-node.set[:aegir][:profile] = 'devmaster'
 devmaster_root = "#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}"
 
 git "#{node[:aegir][:dir]}/.drush/provision_solr" do
@@ -69,9 +68,12 @@ git "#{devmaster_root}/sites/all/modules/hosting_solr" do
   action :sync
   user "aegir"
   group "aegir"
+  notifies :run, "drush[@hostmaster en hosting_solr]", :immediately
 end
 
-# drush "@hostmaster en hosting_solr"
+drush "@hostmaster en hosting_solr" do
+  action :nothing
+end
   
 # configuring tomcat
 #template "/var/lib/tomcat7/conf/Catalina/localhost/solr.xml" do
