@@ -21,6 +21,8 @@ package "python-software-properties"
 execute "add ppa with bash" do
   command "add-apt-repository ppa:ondrej/php5 -y"
   notifies :run, "execute[apt-get update]", :immediately
+  not_if {File.exists?("/etc/apt/sources.list.d/ondrej-php5-precise.list")}
 end
+
 
 include_recipe "php"
