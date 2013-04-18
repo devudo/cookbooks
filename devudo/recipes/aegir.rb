@@ -52,9 +52,9 @@ aegir_install_command = <<-EOH
   --profile="#{node[:aegir][:profile]}" \
   --makefile="#{node[:aegir][:makefile]}" \
   --working_copy \
-  --yes 
+  --yes
   EOH
-  
+
 log aegir_install_command
 
 bash "aegir-install" do
@@ -62,7 +62,7 @@ bash "aegir-install" do
     File.exists?("#{node[:aegir][:dir]}/#{node[:aegir][:profile]}-#{node[:aegir][:version]}")
   end
   user "aegir"
-  group "aegir"
+  group "www-data"
   environment 'HOME' => "#{node[:aegir][:dir]}"
   cwd "#{node[:aegir][:dir]}"
   code aegir_install_command
