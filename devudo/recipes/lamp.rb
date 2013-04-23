@@ -6,10 +6,10 @@ include_recipe "mysql::server"
 include_recipe "devudo::mysql_secure_installation"
 
 # If we have keys, install newrelic
-if node['newrelic']['server_monitoring']['license'] != ""
+if node['newrelic']['server_monitoring']['license'] != "CHANGE_ME"
   include_recipe "newrelic"
 end
-if node['newrelic']['application_monitoring']['license'] != ""
+if node['newrelic']['application_monitoring']['license'] != "CHANGE_ME"
   include_recipe "newrelic"
 end
 
