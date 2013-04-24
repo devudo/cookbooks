@@ -13,15 +13,17 @@ default[:aegir][:hostmaster_install_command] = "hostmaster-install"
 default[:aegir][:hosting_queue_runner_path] = '/usr/local/bin/hosting-queue-runner'
 default[:aegir][:hosting_queue_runit_path] = '/etc/hosting-queue'
 
-default['drush']['install_method'] = "wget"
-default['drush']['install_dir'] = "/usr/share/drush"
-default['drush']['command_path'] = "/usr/local/bin/drush"
-default['drush']['version'] = "7.x-4.6"
+node.set['drush']['install_method'] = "wget"
+node.set['drush']['install_dir'] = "/usr/share/drush"
+node.set['drush']['command_path'] = "/usr/local/bin/drush"
+node.set['drush']['version'] = "7.x-4.6"
 
 # Making these blank by default so we can check for them
-default['newrelic']['server_monitoring']['license'] = ""
-default['newrelic']['application_monitoring']['license'] = ""
-
+#default['newrelic']['server_monitoring']['license'] = ""
+#default['newrelic']['application_monitoring']['license'] = ""
+# doesn't work
+node.set['newrelic']['server_monitoring']['license'] = ""
+node.set['newrelic']['application_monitoring']['license'] = ""
 
 # SHOPMASTER ONLY
 #
@@ -37,10 +39,14 @@ default[:rackspace][:rackspace_version] = 'v2'
 
 # 5.4 or 5.4 ONLY... for now... it has to have a matching recipe,
 # like recipe[devudo::php-5.4]
-default['php']['version'] = '5.4'
-default['php']['conf_dir']      = '/etc/php5/apache2'
+node.set['php']['version'] = '5.4'
+node.set['php']['conf_dir']      = '/etc/php5/apache2'
+#not set
 
-default['mysql']['tunable']['max_allowed_packet']   = "64M"
+#default['mysql']['tunable']['max_allowed_packet']   = "64M"
+node.set['mysql']['tunable']['max_allowed_packet']   = "64M"
+node.set['mysql']['bind_address'] = ""
+
 
 # System users to create on the target
 # Put the users authorized_keys as the value of this array
