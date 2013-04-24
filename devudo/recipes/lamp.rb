@@ -4,12 +4,11 @@
 include_recipe "apt"
 include_recipe "mysql::server"
 include_recipe "devudo::mysql_secure_installation"
-
 # If we have keys, install newrelic
-if node['newrelic']['server_monitoring']['license'] != "CHANGE_ME"
+if node['newrelic']['server_monitoring']['license'] != ""
   include_recipe "newrelic"
 end
-if node['newrelic']['application_monitoring']['license'] != "CHANGE_ME"
+if node['newrelic']['application_monitoring']['license'] != ""
   include_recipe "newrelic"
 end
 
@@ -47,8 +46,8 @@ if node[:php][:version] != "5.4"
 end
 
 include_recipe "devudo::php-#{node[:php][:version]}"
+include_recipe "drush::install_console_table"
 include_recipe "drush"
-
 # additional php packages
 %w{ php5 php5-cli php5-gd php5-mysql php-pear php5-curl }.each do |package_name|
   package package_name
