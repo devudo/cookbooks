@@ -30,33 +30,32 @@ end
 # @TODO! This is failing to init submodules, because the folder is actually
 # created in aegir recipe using devmaster-install... Actually I think it is
 # because I removed --working-copy from devmaster install
-git devmaster_root do
-  repository "git@github.com:devudo/devmaster.git"
-  reference "6.x-1.x"
-  action :sync
-  enable_submodules true
-  user "aegir"
-  group "aegir"
-end
-
+#git devmaster_root do
+#  repository "git@github.com:devudo/devmaster_plus.git"
+#  reference "6.x-1.x"
+#  action :sync
+#  user "aegir"
+#  group "aegir"
+#end
+#
 # Provision tools
 git "#{aegir_root}/.drush/provision_git" do
-    repository "http://git.drupal.org/project/provision_git.git"
-    reference "6.x-1.x"
-    action :sync
-    user "aegir"
+  repository "http://git.drupal.org/project/provision_git.git"
+  reference "6.x-1.x"
+  action :sync
+  user "aegir"
 end
 git "#{aegir_root}/.drush/devshop_provision" do
-    repository "http://git.drupal.org/project/devshop_provision.git"
-    reference "6.x-1.x"
-    action :sync
-    user "aegir"
+  repository "http://git.drupal.org/project/devshop_provision.git"
+  reference "6.x-1.x"
+  action :sync
+  user "aegir"
 end
 git "#{aegir_root}/.drush/provision_logs" do
-    repository "http://git.drupal.org/project/provision_logs.git"
-    reference "6.x-1.x"
-    action :sync
-    user "aegir"
+  repository "http://git.drupal.org/project/provision_logs.git"
+  reference "6.x-1.x"
+  action :sync
+  user "aegir"
 end
 #git "#{node[:aegir][:dir]}/.drush/provision_solr" do
 #    repository "http://git.drupal.org/project/provision_solr.git"
