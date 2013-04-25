@@ -51,9 +51,10 @@ include_recipe "devudo::php-#{node[:php][:version]}"
 #include_recipe "drush::install_console_table"
 include_recipe "drush"
 # additional php packages
-%w{ php5 php5-cli php5-gd php5-mysql php-pear php5-curl }.each do |package_name|
+%w{ php5 php5-cli php5-gd php5-mysql php-pear php5-curl php5-mcrypt }.each do |package_name|
   package package_name
 end
+
 
 # add our recursive git pull tweak.
 file "/usr/local/bin/git-pull-recursive" do
