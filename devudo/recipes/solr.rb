@@ -56,13 +56,6 @@ git "#{node[:aegir][:dir]}/.drush/provision_solr" do
   action :sync
   user "aegir"
   group "aegir"
-end
-git "#{devmaster_root}/sites/all/modules/hosting_solr" do
-  repository "http://git.drupal.org/project/hosting_solr.git"
-  reference "6.x-1.x"
-  action :sync
-  user "aegir"
-  group "aegir"
   notifies :run, "drush[@hostmaster en hosting_solr -y]", :immediately
 end
 
