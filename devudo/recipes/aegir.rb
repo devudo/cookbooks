@@ -51,7 +51,7 @@ aegir_install_command = <<-EOH
   --web_group="www-data" \
   --profile="#{node[:aegir][:profile]}" \
   --makefile="#{node[:aegir][:makefile]}" \
-  --working_copy \
+  --working-copy \
   --yes
   EOH
 
