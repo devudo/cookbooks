@@ -57,6 +57,13 @@ git "#{aegir_root}/.drush/provision_logs" do
   action :sync
   user "aegir"
 end
+
+git "#{aegir_root}/.drush/provision_tasks_extra" do
+    repository "http://git.drupal.org/project/provision_tasks_extra.git"
+    reference "6.x-1.x"
+    action :sync
+    user "aegir"
+end
 #git "#{node[:aegir][:dir]}/.drush/provision_solr" do
 #    repository "http://git.drupal.org/project/provision_solr.git"
 #    reference "6.x-1.x"
