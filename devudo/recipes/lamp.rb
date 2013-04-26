@@ -32,7 +32,7 @@ git "/usr/share/drush/commands/rackspace_drush" do
 end
 
 # Save a DNS record for myself!
-drush "rackspace-dns-create --rackspace_username=#{node[:rackspace][:username]} --rackspace_api_key=#{node[:rackspace][:apikey]} --hostname=#{node[:fqdn]} --ip_address=#{node[:ipaddress]}" do
+drush "rackspace-dns-create --rackspace_username=#{node[:rackspace][:rackspace_api_username]} --rackspace_api_key=#{node[:rackspace][:rackspace_api_key]} --hostname=#{node[:fqdn]} --ip_address=#{node[:ipaddress]}" do
   not_if {
     File.exists?("/etc/ip_address")
   }
