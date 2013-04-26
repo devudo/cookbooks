@@ -4,7 +4,7 @@ action :run do
   execute "drush command" do
     command "drush #{new_resource.name} -y"
     user new_resource.user
-    group new_resource.user
+    group new_resource.group
     environment ({'HOME' => new_resource.cwd})
     cwd new_resource.cwd
   end
