@@ -15,7 +15,9 @@ if node[:php][:version] != "5.4"
   node.set[:php][:version] = "5.3"
 end
 
-directory "/etc/php5/apache2"
+directory "/etc/php5/apache2" do
+  recursive true
+end
 
 include_recipe "devudo::php-#{node[:php][:version]}"
 #include_recipe "drush::install_console_table"
@@ -31,26 +33,31 @@ git "/usr/share/drush/commands/rackspace_drush" do
   enable_submodules true
 end
 
-# Save a DNS record for myself!
-drush "rackspace-dns-create --rackspace_username=#{node[:rackspace][:rackspace_api_username]} --rackspace_api_key=#{node[:rackspace][:rackspace_api_key]} --hostname=#{node[:fqdn]} --ip_address=#{node[:ipaddress]}" do
-  not_if {
-    File.exists?("/etc/ip_address")
-  }
-  not_if {
-    node[:vagrant][:host_name] == node[:fqdn]
-  }
-  user "root"
-  group "root"
-  cwd "/"
-end
+# Save a DNS record for myself unless we've done it already or we are in vagrant
+unless File.exists?("/etc/ip_address") && node[:vagrant][:host_name] == node[:fqdn]
+    
+  # Add DNS record for hostname
+  drush "rackspace-dns-create --rackspace_username=#{node[:rackspace][:rackspace_api_username]} --rackspace_api_key=#{node[:rackspace][:rackspace_api_key]} --hostname=#{node[:fqdn]} --ip_address=#{node[:ipaddress]}" do
+    user "root"
+    group "root"
+    cwd "/"
+  end
 
-# add a file to indicate the ipaddress
-file "/etc/ip_address" do
-  owner "root"
-  group "root"
-  mode "0755"
-  action :create
-  content node[:ipaddress]
+  # Add DNS record for *.hostname
+  drush "rackspace-dns-create --rackspace_username=#{node[:rackspace][:rackspace_api_username]} --rackspace_api_key=#{node[:rackspace][:rackspace_api_key]} --hostname=*.#{node[:fqdn]} --ip_address=#{node[:ipaddress]}" do
+    user "root"
+    group "root"
+    cwd "/"
+  end
+  
+  # add a file to indicate the ipaddress
+  file "/etc/ip_address" do
+    owner "root"
+    group "root"
+    mode "0755"
+    action :create
+    content node[:ipaddress]
+  end
 end
 
 
