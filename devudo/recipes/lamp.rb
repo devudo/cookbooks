@@ -36,6 +36,9 @@ drush "rackspace-dns-create --rackspace_username=#{node[:rackspace][:rackspace_a
   not_if {
     File.exists?("/etc/ip_address")
   }
+  not_if {
+    node[:vagrant][:host_name] == node[:fqdn]
+  }
   user "root"
   group "root"
   cwd "/"
