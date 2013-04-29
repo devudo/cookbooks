@@ -12,7 +12,7 @@ package "tomcat7" do
 end
 
 # Add solr war to tomcat webapps
-cookbook_file "/usr/share/solr-3.6.2.war" do
+cookbook_file "/usr/share/solr.war" do
   source "solr-3.6.2.war"
   owner "root"
   group "root"
