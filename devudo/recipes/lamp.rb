@@ -26,7 +26,8 @@ include_recipe "drush"
 package "php5-curl"
 package "git-core"
 
-# Get Rackspace commands
+# Get Rackspace commands.  This is needed because the server sets up its own
+# DNS records.
 git "/usr/share/drush/commands/rackspace_drush" do
   repository "http://github.com/devudo/rackspace_drush.git"
   action :sync
