@@ -158,6 +158,7 @@ else
     end
     supports :status => true, :restart => true, :reload => true
     action :enable
+    ignore_failure true
   end
 end
 
@@ -217,5 +218,6 @@ unless platform_family?(%w{mac_os_x})
 
   service "mysql" do
     action :start
+    ignore_failure true
   end
 end
