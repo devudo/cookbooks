@@ -1,3 +1,5 @@
+default[:is_vagrant] = false
+
 default[:aegir][:frontend] = node['fqdn']
 default[:aegir][:fqdn] = node['fqdn']
 default[:aegir][:client_email] = "jon@thinkdrop.net"
