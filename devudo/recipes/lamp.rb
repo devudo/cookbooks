@@ -61,12 +61,10 @@ unless File.exists?("/etc/ip_address") || node[:vagrant][:host_name] == node[:fq
   end
 end
 
-
-##### OLD TOP
-
-
-include_recipe "mysql::server"
-include_recipe "devudo::mysql_secure_installation"
+##
+# MariaDB
+##
+include_recipe "devudo::db"
 
 # If we have keys, install newrelic
 
