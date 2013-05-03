@@ -58,9 +58,9 @@ default[:devudo][:users] = {
 }
 
 # Generate and deploy aegir ssh key to github
-node.set['github_deploys']['deploy_user'] = "aegir"
-node.set['github_deploys']['deploy_group'] = "aegir"
-node.set['github_deploys']['deploy_home_path'] = "/var"
+node.set['github_deploys']['deploy_user'] = "github"
+node.set['github_deploys']['deploy_group'] = "github"
+node.set['github_deploys']['deploy_home_path'] = "/var/github"
 
 node.set['github_deploys']['github_api']['endpoint_path'] = "/user/keys"
 node.set['github_deploys']['github_api']['username'] = "devudo-deploy"
