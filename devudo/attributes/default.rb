@@ -62,8 +62,6 @@ node.set['github_deploys']['deploy_user'] = "aegir"
 node.set['github_deploys']['deploy_group'] = "aegir"
 node.set['github_deploys']['deploy_home_path'] = "/var"
 
-node.set['github_deploys']['deploy_uid'] = 996
-
 node.set['github_deploys']['github_api']['endpoint_path'] = "/user/keys"
 node.set['github_deploys']['github_api']['username'] = "devudo-deploy"
 node.set['github_deploys']['github_api']['email'] = "jon@devudo.com"
