@@ -2,6 +2,7 @@
 # This file will remove existing git repos and replace with links
 # to /source repos.
 #
+node.set[:is_vagrant] = true
 
 sourceList = {
   'devudo/devudo_provision' => '/var/aegir/.drush/devudo_provision',
