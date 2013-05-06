@@ -19,7 +19,7 @@ directory "/var/aegir" do
   action :create
   recursive true
 end
-Directory "/var/aegir/.drush" do
+directory "/var/aegir/.drush" do
   owner "aegir"
   group "aegir"
   mode 00755
@@ -41,9 +41,31 @@ directory "/var/aegir/config" do
   recursive true
 end
 
-include_recipe "ssh_known_hosts"
-ssh_known_hosts_entry 'github.com'
-include_recipe "github-deploys"
+# Setup its ssh keys
+cookbook_file "/var/aegir/.ssh/id_rsa" do
+  source "ssh/aegir/id_rsa"
+  action :create
+  backup false
+  owner "aegir"
+  group "aegir"
+  mode "0600"
+end
+cookbook_file "/var/aegir/.ssh/id_rsa.pub" do
+  source "ssh/aegir/id_rsa.pub"
+  action :create
+  backup false
+  owner "aegir"
+  group "aegir"
+  mode "0600"
+end
+cookbook_file "/var/aegir/.ssh/config" do
+  source "ssh/aegir/config"
+  action :create
+  backup false
+  owner "aegir"
+  group "aegir"
+  mode "0600"
+end
 
 # Here we take the attribute and save the authorized_keys file.
 # Right now this is handled in shop_hosting so the web app
