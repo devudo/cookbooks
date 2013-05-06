@@ -44,37 +44,33 @@ end
 # Setup its ssh keys
 path_to_key = "#{node[:aegir][:dir]}/.ssh/id_rsa"
 
-Chef::Log.debug("[DEVUDO] Generating ssh keys for aegir user")
-execute "aegir-ssh-keys" do
-  user "aegir"
-  creates "#{path_to_key}.pub"
-  command "ssh-keygen -t rsa -q -f #{path_to_key} -P \"\""
-  not_if {
-    File.exists?(path_to_key)
-  }
+log "[DEVUDO] Generating ssh keys for aegir user"
+
+unless File.exists?(path_to_key)
+  
+  execute "aegir-ssh-keys" do
+    user "aegir"
+    creates "#{path_to_key}.pub"
+    command "ssh-keygen -t rsa -q -f #{path_to_key} -P \"\""  
+  end
+  log "[DEVUDO] Key generation complete"
+  
+  # Add aegir's public key to our repos
+  log "[DEVUDO] Uploading key to github account for #{node[:github_deploys][:github_api][:username]}"
+  ruby_block "upload_key_to_github" do
+    block do
+      class Chef::Resource::RubyBlock
+        include GithubAPI
+      end
+      upload_key(
+        node[:github_deploys][:github_api][:email],
+        node[:github_deploys][:github_api][:password],
+        node[:fqdn],
+        "#{path_to_key}.pub")
+    end
+  end
+  log "[DEVUDO] Public Key uploaded to github:"
 end
-Chef::Log.debug("[DEVUDO] Key generation complete")
-
-# Add aegir's public key to our repos
-Chef::Log.debug("[DEVUDO] Uploading key to github account for #{node[:github_deploys][:github_api][:username]}")
-ruby_block "upload_key_to_github" do
-	block do
-		class Chef::Resource::RubyBlock
-		  include GithubAPI
-		end
-		upload_key(
-			node[:github_deploys][:github_api][:email],
-			node[:github_deploys][:github_api][:password],
-			node[:fqdn],
-			"#{path_to_key}.pub")
-	end
-end
-aegir_public_key =  IO.read("#{path_to_key}.pub")
-node.set[:aegir][:public_key] = aegir_public_key;
-
-Chef::Log.debug("[DEVUDO] Public Key uploaded to github:")
-Chef::Log.debug("[DEVUDO] #{aegir_public_key}")
-
 
 cookbook_file "/var/aegir/.ssh/config" do
   source "ssh/aegir/config"
