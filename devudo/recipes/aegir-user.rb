@@ -42,22 +42,52 @@ directory "/var/aegir/config" do
 end
 
 # Setup its ssh keys
-cookbook_file "/var/aegir/.ssh/id_rsa" do
-  source "ssh/aegir/id_rsa"
-  action :create
-  backup false
-  owner "aegir"
-  group "aegir"
-  mode "0600"
+path_to_key = "#{node[:aegir][:dir]}/.ssh/id_rsa"
+
+Chef::Log.debug("Generating ssh keys for aegir user")
+execute "aegir-ssh-keys" do
+  user "aegir"
+  creates "#{path_to_key}.pub"
+  command "ssh-keygen -t rsa -q -f #{path_to_key} -P \"\""
+  not_if {
+    File.exists?(path_to_key)
+  }
 end
-cookbook_file "/var/aegir/.ssh/id_rsa.pub" do
-  source "ssh/aegir/id_rsa.pub"
-  action :create
-  backup false
-  owner "aegir"
-  group "aegir"
-  mode "0600"
+Chef::Log.debug("[SSH] Key generation complete")
+
+# Add aegir's public key to our repos
+ruby_block "upload_key_to_github" do
+	block do
+
+		class Chef::Resource::RubyBlock
+		  include GithubAPI
+		end
+
+		upload_key(
+			node[:github_deploys][:github_api][:email],
+			node[:github_deploys][:github_api][:password],
+			node[:fqdn],
+			"#{path_to_key}.pub")
+	end
 end
+
+
+#cookbook_file "/var/aegir/.ssh/id_rsa" do
+#  source "ssh/aegir/id_rsa"
+#  action :create
+#  backup false
+#  owner "aegir"
+#  group "aegir"
+#  mode "0600"
+#end
+#cookbook_file "/var/aegir/.ssh/id_rsa.pub" do
+#  source "ssh/aegir/id_rsa.pub"
+#  action :create
+#  backup false
+#  owner "aegir"
+#  group "aegir"
+#  mode "0600"
+#end
 cookbook_file "/var/aegir/.ssh/config" do
   source "ssh/aegir/config"
   action :create
