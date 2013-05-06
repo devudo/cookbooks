@@ -44,7 +44,7 @@ end
 # Setup its ssh keys
 path_to_key = "#{node[:aegir][:dir]}/.ssh/id_rsa"
 
-Chef::Log.debug("Generating ssh keys for aegir user")
+Chef::Log.debug("[DEVUDO] Generating ssh keys for aegir user")
 execute "aegir-ssh-keys" do
   user "aegir"
   creates "#{path_to_key}.pub"
@@ -53,9 +53,10 @@ execute "aegir-ssh-keys" do
     File.exists?(path_to_key)
   }
 end
-Chef::Log.debug("[SSH] Key generation complete")
+Chef::Log.debug("[DEVUDO] Key generation complete")
 
 # Add aegir's public key to our repos
+Chef::Log.debug("[DEVUDO] Uploading key to github account for #{node[:github_deploys][:github_api][:username]}")
 ruby_block "upload_key_to_github" do
 	block do
 		class Chef::Resource::RubyBlock
@@ -68,6 +69,12 @@ ruby_block "upload_key_to_github" do
 			"#{path_to_key}.pub")
 	end
 end
+aegir_public_key =  IO.read("#{path_to_key}.pub")
+node.set[:aegir][:public_key] = aegir_public_key;
+
+Chef::Log.debug("[DEVUDO] Public Key uploaded to github:")
+Chef::Log.debug("[DEVUDO] #{aegir_public_key}")
+
 
 cookbook_file "/var/aegir/.ssh/config" do
   source "ssh/aegir/config"
