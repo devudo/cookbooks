@@ -58,11 +58,9 @@ Chef::Log.debug("[SSH] Key generation complete")
 # Add aegir's public key to our repos
 ruby_block "upload_key_to_github" do
 	block do
-
 		class Chef::Resource::RubyBlock
 		  include GithubAPI
 		end
-
 		upload_key(
 			node[:github_deploys][:github_api][:email],
 			node[:github_deploys][:github_api][:password],
@@ -71,23 +69,6 @@ ruby_block "upload_key_to_github" do
 	end
 end
 
-
-#cookbook_file "/var/aegir/.ssh/id_rsa" do
-#  source "ssh/aegir/id_rsa"
-#  action :create
-#  backup false
-#  owner "aegir"
-#  group "aegir"
-#  mode "0600"
-#end
-#cookbook_file "/var/aegir/.ssh/id_rsa.pub" do
-#  source "ssh/aegir/id_rsa.pub"
-#  action :create
-#  backup false
-#  owner "aegir"
-#  group "aegir"
-#  mode "0600"
-#end
 cookbook_file "/var/aegir/.ssh/config" do
   source "ssh/aegir/config"
   action :create
