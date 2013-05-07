@@ -77,26 +77,4 @@ bash "aegir-update" do
 end
 
 # Hosting queue runner
-# include_recipe "devudo::hosting-queue-runner"
-
-#THIS IS NOW FAILING!
-#[2013-05-07T22:56:55+00:00] INFO: Processing service[runit] action nothing (runit::default line 20)
-#[2013-05-07T22:56:55+00:00] INFO: Processing execute[start-runsvdir] action nothing (runit::default line 24)
-#[2013-05-07T22:56:55+00:00] INFO: Processing execute[runit-hup-init] action nothing (runit::default line 33)
-#[2013-05-07T22:56:55+00:00] INFO: Processing package[runit] action install (runit::default line 93)
-#[2013-05-07T22:56:55+00:00] INFO: Processing service[hosting-queue] action nothing (dynamically defined)
-#[2013-05-07T22:56:55+00:00] INFO: Processing runit_service[hosting-queue] action enable (devudo::aegir line 83)
-#
-#================================================================================
-#Error executing action `enable` on resource 'runit_service[hosting-queue]'
-#================================================================================
-#
-#NameError
-#---------
-#Cannot find a resource for load_new_resource_state on ubuntu version 12.04
-#
-#Cookbook Trace:
-#---------------
-#/var/chef/cookbooks/runit/libraries/provider_runit_service.rb:93:in `action_enable'
-#
-#
+ include_recipe "devudo::hosting-queue-runner"
