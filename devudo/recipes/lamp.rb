@@ -35,7 +35,7 @@ git "/usr/share/drush/commands/rackspace_drush" do
 end
 
 # Save a DNS record for myself unless we've done it already or we are in vagrant
-unless File.exists?("/etc/ip_address") || defined? node[:vagrant]
+unless File.exists?("/etc/ip_address")
     
   # Add DNS record for hostname
   drush "rackspace-dns-create --rackspace_username=#{node[:rackspace][:rackspace_api_username]} --rackspace_api_key=#{node[:rackspace][:rackspace_api_key]} --hostname=#{node[:fqdn]} --ip_address=#{node[:ipaddress]}" do
