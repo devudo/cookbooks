@@ -34,30 +34,34 @@ git "/usr/share/drush/commands/rackspace_drush" do
   enable_submodules true
 end
 
-# Save a DNS record for myself unless we've done it already or we are in vagrant
-unless File.exists?("/etc/ip_address")
-    
-  # Add DNS record for hostname
-  drush "rackspace-dns-create --rackspace_username=#{node[:rackspace][:rackspace_api_username]} --rackspace_api_key=#{node[:rackspace][:rackspace_api_key]} --hostname=#{node[:fqdn]} --ip_address=#{node[:ipaddress]}" do
-    user "root"
-    group "root"
-    cwd "/"
-  end
-
-  # Add DNS record for *.hostname
-  drush "rackspace-dns-create --rackspace_username=#{node[:rackspace][:rackspace_api_username]} --rackspace_api_key=#{node[:rackspace][:rackspace_api_key]} --hostname=*.#{node[:fqdn]} --ip_address=#{node[:ipaddress]}" do
-    user "root"
-    group "root"
-    cwd "/"
-  end
+# Run unless node[:vagrant] exists
+unless defined? node[:vagrant]
   
-  # add a file to indicate the ipaddress
-  file "/etc/ip_address" do
-    owner "root"
-    group "root"
-    mode "0755"
-    action :create
-    content node[:ipaddress]
+  # Save a DNS record for myself unless we've done it already
+  unless File.exists?("/etc/ip_address")
+      
+    # Add DNS record for hostname
+    drush "rackspace-dns-create --rackspace_username=#{node[:rackspace][:rackspace_api_username]} --rackspace_api_key=#{node[:rackspace][:rackspace_api_key]} --hostname=#{node[:fqdn]} --ip_address=#{node[:ipaddress]}" do
+      user "root"
+      group "root"
+      cwd "/"
+    end
+  
+    # Add DNS record for *.hostname
+    drush "rackspace-dns-create --rackspace_username=#{node[:rackspace][:rackspace_api_username]} --rackspace_api_key=#{node[:rackspace][:rackspace_api_key]} --hostname=*.#{node[:fqdn]} --ip_address=#{node[:ipaddress]}" do
+      user "root"
+      group "root"
+      cwd "/"
+    end
+    
+    # add a file to indicate the ipaddress
+    file "/etc/ip_address" do
+      owner "root"
+      group "root"
+      mode "0755"
+      action :create
+      content node[:ipaddress]
+    end
   end
 end
 
